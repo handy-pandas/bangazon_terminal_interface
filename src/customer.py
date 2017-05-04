@@ -40,6 +40,13 @@ class Customer(object):
         return self.__id  
 
     def save(self):
+        """This function takes name, street_address, city, state, postal_code, and phone_number of current active customer
+        and sends these properties to bangazon db to be saved. It then makes a separate query to bring back customer,
+        and set id as a property of class
+        
+        Returns:
+            TYPE: None
+        """
         self.__id = 1
 
 
