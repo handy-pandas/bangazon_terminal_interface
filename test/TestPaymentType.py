@@ -1,7 +1,6 @@
 import unittest
 
 import sys; sys.path.append('../')
-from src.customer import Customer
 from src.payment_type import PaymentType
 from bangazon_control import BangazonControl
 

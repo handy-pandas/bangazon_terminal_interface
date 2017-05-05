@@ -1,5 +1,5 @@
 """
-Terminal Interface configuration for the Customer table interaction in the database
+Terminal Interface configuration for the Payment Type table interaction in the database
 """
 class PaymentType(object):
 	"""
