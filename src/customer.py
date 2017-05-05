@@ -20,8 +20,8 @@ class Customer(object):
     def add_customer_to_database(self, customer):
         pass
 
-    def retrieve_customer_from_database_by_name(self, name):
-        return { 'name': 'Nick Nash'}
+    def retrieve_customer_from_database_by_all_attributes(self, new_customer):
+        return new_customer
 
     def retrieve_customer_from_database_by_id(self, id):
         pass

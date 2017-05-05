@@ -34,3 +34,20 @@ class BangazonControl(object):
 
     def choose_active_customer(self):
         return 1
+
+    def create_payment_type(self, name, account_number):
+        """
+        This method creates a dictionary that contains information about the payment types and returns that dictionary.
+
+        Arguments:
+            name (String): Name of the payment type.
+            account_number (Int): Account Number.
+
+        Returns:
+            new_payment_type (Dictionary): containing attributes of name and account_number
+
+        Author:
+            wocaldwell
+        """
+        new_payment_type = {'name': name, 'account_number': account_number}
+        return new_payment_type

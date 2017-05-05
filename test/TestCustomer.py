@@ -12,14 +12,13 @@ class TestCustomer(unittest.TestCase):
         control = BangazonControl()
         new_customer = control.create_customer(name='Nick Nash', address='123 Dumb Ave', city='StupidVille', state='Dumb Town', postal_code='12345-1234')
         customer_management.add_customer_to_database(new_customer)
-        retrieved_customer = customer_management.retrieve_customer_from_database_by_name('Nick Nash')
+        retrieved_customer = customer_management.retrieve_customer_from_database_by_all_attributes(new_customer)
 
-        self.assertEqual(new_customer['name'], 'Nick Nash')
-        self.assertEqual(new_customer['address'], '123 Dumb Ave')
-        self.assertEqual(new_customer['city'], 'StupidVille')
-        self.assertEqual(new_customer['state'], 'Dumb Town')
-        self.assertEqual(new_customer['postal_code'], '12345-1234')
         self.assertEqual(retrieved_customer['name'], new_customer['name'])
+        self.assertEqual(retrieved_customer['address'], new_customer['address'])
+        self.assertEqual(retrieved_customer['city'], new_customer['city'])
+        self.assertEqual(retrieved_customer['state'], new_customer['state'])
+        self.assertEqual(retrieved_customer['postal_code'], new_customer['postal_code'])
 
 
 
