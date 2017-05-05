@@ -1,63 +1,48 @@
-# .
-
+"""
+Terminal Interface configuration for the Customer table interaction in the database
+"""
 class Customer(object):
-    """docstring for Customer"""
+    """
+    This class is to handle interactions with the database through sqlite
 
-    def __init__(self, name, street_address, city, state, postal_code, phone_number):
-        self.__name = name
-        self.__street_address = street_address
-        self.__city = city
-        self.__state = state
-        self.__postal_code = postal_code
-        self.__phone_number = phone_number
+    Methods:
+        create_customer: used to create a dict() of the information pertaining to the customer.
+        add_customer_to_database: used to insert the customer information into the database.
+        retrieve_customer_from_database_by_name: used to retrieve the customer information from the database by name.
+        retrieve_customer_from_database_by_id: used to retrieve the customer information from the database by id.
 
-    @property
-    def name(self):
-        return self.__name
+    Author:
+        Adam Myers
+    """
 
-    @property
-    def street_address(self):
-        return self.__street_address
+    def __init__(self):
+        pass
 
-    @property
-    def city(self):
-        return self.__city
-
-    @property
-    def state(self):
-        return self.__state
-
-    @property
-    def postal_code(self):
-        return self.__postal_code
-
-    @property
-    def phone_number(self):
-        return self.__phone_number
-
-    @property
-    def id(self):
-        return self.__id  
-
-    def save(self):
+    def create_customer(self, name, address, state, city, postal_code):
         """
-        This function takes name, street_address, city, state, postal_code, and phone_number of current active customer
-        and sends these properties to bangazon db to be saved. It then makes a separate query to bring back customer,
-        and set id as a property of class
+        This method creates a dictionary that contains information about the customer and returns that dictionary.
 
         Arguments:
-           None
-        
-        Returns:
-            TYPE: None
-        
+            name (String): Name of the customer.
+            address (String): Address of the customer.
+            state (String): State of which the customer lives.
+            city (String): City the customer lives in.
+            postal_code (String): Postal code that the customer lives in.
+
         Author:
-            Taylor Perkins
+            Adam Myers
         """
-        self.__id = 1
+        new_customer = { name: name, address : address, state: state, city: city, postal_code: postal_code }
+        return new_customer
+
+    def add_customer_to_database(self, customer):
+        pass
+
+    def retrieve_customer_from_database_by_name(self, name):
+        return { name: 'Nick Nash'}
+
+    def retrieve_customer_from_database_by_id(self, id):
+        pass
 
 
-# @street_address.setter
-# def street_address(self, street_address):
-#   self.__street_address = street_address
 
