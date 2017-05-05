@@ -31,3 +31,6 @@ class BangazonControl(object):
         """
         new_customer = { 'name': name, 'address' : address, 'state': state, 'city': city, 'postal_code': postal_code }
         return new_customer
+
+    def choose_active_customer(self):
+        return 1
