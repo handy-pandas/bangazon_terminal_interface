@@ -2,38 +2,24 @@ import unittest
 
 import sys; sys.path.append('../')
 from src.customer import Customer
+from bangazon_control import BangazonControl
+
 
 class TestCustomer(unittest.TestCase):
 
-  @classmethod
-  def setUpClass(self):
-    self.taylor = Customer(name="Taylor Unicorn", street_address="Nashville", city="1st Avenue", state="Nick", postal_code="12345-67894", phone_number="615-999-9999")
-    self.taylor.save()
+    def test_if_customer_can_be_created_in_database(self):
+        customer_management = Customer()
+        control = BangazonControl()
+        new_customer = control.create_customer(name='Nick Nash', address='123 Dumb Ave', city='StupidVille', state='Dumb Town', postal_code='12345-1234')
+        customer_management.add_customer_to_database(new_customer)
+        retrieved_customer = customer_management.retrieve_customer_from_database_by_name('Nick Nash')
 
-  def test_customer_has_name(self):
-    self.assertEqual(self.taylor.name, 'Taylor Unicorn')
-
-  def test_customer_has_street_address(self):
-    self.assertEqual(self.taylor.street_address, 'Nashville')
-
-  def test_customer_has_city(self):
-    self.assertEqual(self.taylor.city, '1st Avenue')
-
-  def test_customer_has_state(self):
-    self.assertEqual(self.taylor.state, 'Nick')
-
-  def test_customer_has_postal_code(self):
-    self.assertEqual(self.taylor.postal_code, '12345-67894')
-
-  def test_customer_has_phone_number(self):
-    self.assertEqual(self.taylor.phone_number, '615-999-9999')
-
-  def test_customer_exists_in_database(self):
-    self.assertIsNotNone(self.taylor.id)
-
-
-
-
+        self.assertEqual(new_customer['name'], 'Nick Nash')
+        self.assertEqual(new_customer['address'], '123 Dumb Ave')
+        self.assertEqual(new_customer['city'], 'StupidVille')
+        self.assertEqual(new_customer['state'], 'Dumb Town')
+        self.assertEqual(new_customer['postal_code'], '12345-1234')
+        self.assertEqual(retrieved_customer['name'], new_customer['name'])
 
 
 
