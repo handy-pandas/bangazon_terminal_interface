@@ -1,7 +1,13 @@
+from src.customer import Customer
+from src.order import Order
+from src.payment_type import PaymentType
+from src.product import Product
+from src.product_order import ProductOrder
+
 """
 Terminal Interface configuration for the terminal interface for the user interaction.
 """
-class BangazonControl(object):
+class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
     """
     This class is to handle interactions with the user from the terminal
 
@@ -65,6 +71,22 @@ class BangazonControl(object):
 
     def save_all_customers(self):
         pass
+
+    def save_all_products(self):
+        self.products = [(1, 12.99, 'ball')]
+
+    def add_product_to_order(self, index_of_product):
+        if self.active_customer:
+            self.active_order = self.make_order_active(self.active_customer)            
+        pass
+
+    def get_sum_of_products_for_current_order(self, active_order_id):
+        pass
+
+
+
+
+
 
 
 
