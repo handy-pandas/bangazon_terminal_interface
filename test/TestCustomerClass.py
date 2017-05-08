@@ -26,6 +26,7 @@ class TestCustomerClass(unittest.TestCase):
     self.assertIsNotNone(customers)  
 
   def test_if_customer_is_active(self):    
+    self.control.save_all_customers()
     self.control.set_active_customer(1)    
 
     self.assertEqual(self.control.active_customer, 12)
