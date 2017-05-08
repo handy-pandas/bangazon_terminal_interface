@@ -1,20 +1,39 @@
-#.
+"""
+Terminal Interface configuration for the Product table interaction in the database
+"""
 
 class Product(object):
-    """docstring for Product"""
+    """
+    Description:     
+        This class is to handle interactions with the products table through sqlite
 
-    def __init__(self, price, title):
-        self.__price = price
-        self.__title = title
+    Methods:
+        retrieve_all_products: This is a simple query that brings back all products from Prodct table within bangazon db
 
-    @property
-    def title(self):
-        return self.__title
+    Author:
+        Nick Nash
+        Taylor Perkins
+        Talbot Lawrence
+        William Caldwell
+        Adam Myers
+    """
+    def __init__(self):
+        pass
 
-    @property
-    def price(self):
-        return self.__price
+    def retrieve_all_products(self):
+        """
+        This is a simple query that brings back all products from Prodct table within bangazon db
 
-    @property
-    def id(self):
-        return 1
+        Arguments: 
+            None
+
+        Returns:
+            products_list (LIST): List of tuples representing all products in db
+
+        Author: 
+            Taylor Perkins
+        """
+
+        products_list = [(1, 'ball', '12.99')]
+        return products_list
+
