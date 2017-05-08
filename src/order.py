@@ -38,3 +38,15 @@ class Order(object):
     """
     active_order_pk = 1
     return active_order_pk
+
+  def get_specific_order(self, active_order_id):
+    closed_order = [(1, 1, 1)]
+    return closed_order[0][2]
+
+
+
+
+
+
+
+

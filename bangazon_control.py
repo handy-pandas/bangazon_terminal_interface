@@ -47,7 +47,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Returns:
             TYPE: Description
         """
-        self.active_customer = 12
+        self.active_customer = active_customer
 
     def choose_active_customer(self):
         return 1
@@ -81,6 +81,9 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         pass
 
     def get_sum_of_products_for_current_order(self, active_order_id):
+        pass
+
+    def update_payment_type_for_order(self, active_order_id, payment_type_id):
         pass
 
 

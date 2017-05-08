@@ -29,7 +29,7 @@ class TestCustomerClass(unittest.TestCase):
     self.control.save_all_customers()
     self.control.set_active_customer(1)    
 
-    self.assertEqual(self.control.active_customer, 12)
+    self.assertEqual(self.control.active_customer, 1)
 
   def test_if_customer_can_be_created_in_database(self):    
     new_customer = self.control.create_customer(name='Nick Nash', address='123 Dumb Ave', city='StupidVille', state='Dumb Town', postal_code='12345-1234')
