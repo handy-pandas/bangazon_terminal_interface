@@ -26,5 +26,18 @@ class Customer(object):
     def retrieve_customer_from_database_by_id(self, id):
         pass
 
+    def retrieve_all_customers(self):
+        """
+        Makes a query to db and brings back all current customers
+
+        Returns:
+            customer_list (LIST): List of Tuples representing all customers
+
+        Author: 
+            Taylor Perkins
+        """
+        customer_list = [(1)]
+        return customer_list
+
 
 
