@@ -2,48 +2,52 @@
 Terminal Interface configuration for the Payment Type table interaction in the database
 """
 class PaymentType(object):
-	"""
-	This class is to handle interactions with the payment_type table through sqlite
+  """
+  This class is to handle interactions with the payment_type table through sqlite
 
-	Methods:
+  Methods:
 
-	Author:
-	Nick Nash
-	Taylor Perkins
-	Talbot Lawrence
-	William Caldwell
-	Adam Myers
-	"""
+  Author:
+  Nick Nash
+  Taylor Perkins
+  Talbot Lawrence
+  William Caldwell
+  Adam Myers
+  """
 
-	def __init__(self):
-		pass
+  def __init__(self):
+    pass
 
-	def add_payment_type_to_database(self, new_payment_type):
-		"""
-		Add a payment type to the paymetent type table in the bangazon database.
+  def add_payment_type_to_database(self, new_payment_type):
+    """
+    Add a payment type to the paymetent type table in the bangazon database.
 
-		Arguments:
-		new_payment_type(Dictionary), The attributes of the new payment type.
+    Arguments:
+    new_payment_type(Dictionary), The attributes of the new payment type.
 
-		Returns:
-		N/A
+    Returns:
+    N/A
 
-		Author:
-		wocaldwell
-		"""
-		pass
+    Author:
+    wocaldwell
+    """
+    pass
 
-	def retrieve_payment_type_from_database_by_all_attributes(self, new_payment_type):
-		"""
-		Retrieve a payment type from the paymetent type table in the bangazon database.
+  def retrieve_payment_type_from_database_by_all_attributes(self, new_payment_type):
+    """
+    Retrieve a payment type from the paymetent type table in the bangazon database.
 
-		Arguments:
-		new_payment_type(Dictionary) The attributes of the new payment type.
+    Arguments:
+    new_payment_type(Dictionary) The attributes of the new payment type.
 
-		Returns:
-		new_payment_type(Dictionary) The attributes of the new payment type.
+    Returns:
+    new_payment_type(Dictionary) The attributes of the new payment type.
 
-		Author:
-		wocaldwell
-		"""
-		return new_payment_type
+    Author:
+    wocaldwell
+    """
+    return new_payment_type
+
+  def get_active_users_payment_types(self, active_customer_id):
+    payment_types = [(1, 1, 1234567890123456, 'Visa')]
+    return payment_types
