@@ -1,9 +1,3 @@
-"""
-Query the Customer table
-Display the primary key along with the first name and last name
-Choose the integer at the prompt
-Store the primary key into memory
-"""
 
 import unittest
 
