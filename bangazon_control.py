@@ -20,6 +20,10 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Adam Myers
     """
 
+    def __init__(self):
+        self.active_customer = None
+
+
     def create_customer(self, name, address, state, city, postal_code, phone_number):
         """
         This method creates a dictionary that contains information about the customer and returns that dictionary.
@@ -39,17 +43,6 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         """
         new_customer = { 'name': name, 'address' : address, 'state': state, 'city': city, 'postal_code': postal_code, 'phone_number': phone_number }
         return new_customer
-
-    def set_active_customer(self, active_customer):
-        """Summary
-
-        Args:
-            active_customer (Int): Index of active customer from list of all customers
-
-        Returns:
-            TYPE: Description
-        """
-        self.active_customer = active_customer
 
     def choose_active_customer(self):
         """
@@ -72,9 +65,9 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             counter += 1
         selection = input('> ')
         selection = int(selection)-1
-        self.set_active_customer(list_customer[selection]['id'])
+        self.active_customer = list_customer[selection]['id']
         # print(self.active_customer)
-        # return 1
+        #return selection
 
     def create_payment_type(self, customer_id, name, account_number):
         """
@@ -168,10 +161,16 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         if selection == '2':
             self.choose_active_customer()
         if selection == '3':
+            if self.active_customer == None:
+                self.choose_active_customer()
             self.display_create_payment_type()
         if selection == '4':
+            if self.active_customer == None:
+                self.choose_active_customer()
             pass
         if selection == '5':
+            if self.active_customer == None:
+                self.choose_active_customer()
             pass
         if selection == '6':
             pass
@@ -198,9 +197,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         print("\nEnter account number")
         account_number = input("> ")
 
-        customer_id = self.choose_active_customer()
-
-        new_payment_type = self.create_payment_type(customer_id, name, account_number)
+        new_payment_type = self.create_payment_type(self.active_customer, name, account_number)
         self.add_payment_type_to_database(new_payment_type)
 
 
