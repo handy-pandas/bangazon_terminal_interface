@@ -112,5 +112,27 @@ class Customer(object):
 
             return customer_list
 
+"""
+Below is for developmental purposes only. To allow for creation of the database prior to having a setup function run when the menu appears.
+"""
+if __name__ == "__main__":
+    test = Customer()
+    test_cust = { 'name': 'Bobby', 'address': '123 test me Ave', 'city': 'TestVille', 'state': 'WyTesting', 'postal_code':  '123123'}
+
+    test.add_customer_to_database(test_cust)
+    print_me = test.retrieve_all_customers()
+    print_test_2 = test.retrieve_customer_from_database_by_id(1)
+    print_test_3 = test.retrieve_customer_from_database_by_all_attributes(test_cust)
+
+    print("Added customer 'Bobby' :)")
+    print("All customers: {}".format(print_me))
+    print("Customer by ID 1: {}".format(print_test_2))
+    print("Customer by all Attributes: {}".format(print_test_3))
+
+
+
+
+
+    
 
 
