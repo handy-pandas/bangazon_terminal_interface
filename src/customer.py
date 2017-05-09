@@ -78,7 +78,7 @@ class Customer(object):
         with sqlite3.connect('../bangazon.db') as conn:
             c = conn.cursor()
 
-            c.execute("select * from Customer where Customer.customer_Id = '{}' limit 1".format(customer_id))
+            c.execute("select * from Customer where Customer.customer_Id = '{}'".format(customer_id))
 
             query = c.fetchall()
             query = query[0]
@@ -107,7 +107,7 @@ class Customer(object):
             customer_list = list()
 
             for each_customer in queried_customers:
-                customer = { 'id': each_customer[0], 'name': each_customer[1], 'address': each_customer[2], 'city': each_customer[3], 'state': each_customer[4], 'postal_code': each_customer[5] }
+                customer = { 'id': each_customer[0], 'name': each_customer[1] }
                 customer_list.append(customer)
 
             return customer_list
