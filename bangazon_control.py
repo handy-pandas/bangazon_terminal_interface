@@ -110,7 +110,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         if selection == '2':
             pass
         if selection == '3':
-            Bangazon.display_create_payment_type()
+            self.display_create_payment_type()
         if selection == '4':
             pass
         if selection == '5':
@@ -119,7 +119,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             pass
         if selection == '7':
             sys.exit()
-        Bangazon.display_main_menu()
+        self.display_main_menu()
 
     def display_create_payment_type(self):
         """
