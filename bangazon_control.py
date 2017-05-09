@@ -66,9 +66,15 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             Talbot Lawrence
         """
         print("Which customer will be active?")
-
+        list_customer = self.retrieve_all_customers()
+        counter = 1
+        for each_customer in list_customer:
+            print("{}. {}".format(counter, each_customer['name']))
+            counter += 1
         selection = input('> ')
-        self.display_create_payment_option()
+        selection = int(selection)-1
+        self.set_active_customer(list_customer[selection]['id'])
+        print(self.active_customer)
         # return 1
 
     def create_payment_type(self, customer_id, name, account_number):
@@ -161,7 +167,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         if selection == '1':
             self.menu_create_customer()
         if selection == '2':
-            pass
+            self.choose_active_customer()
         if selection == '3':
             pass
         if selection == '4':
