@@ -13,7 +13,7 @@ def CreateDatabase():
         Returns:
             N/A
 
-        Author: 
+        Author:
             Adam Myers
             Talbot Lawrence
         """
@@ -25,10 +25,10 @@ def CreateDatabase():
         try:
             c.execute("""create table Customer (
                 customer_Id integer not null primary key autoincrement,
-                name text, 
-                address text, 
-                city text, 
-                state text, 
+                name text,
+                address text,
+                city text,
+                state text,
                 postal_code text)""")
 
         except sqlite3.OperationalError:
@@ -44,7 +44,7 @@ def CreateDatabase():
         try:
             c.execute("""create table Product (
                 product_Id integer not null primary key autoincrement,
-                price integer, 
+                price integer,
                 title text)""")
 
         except sqlite3.OperationalError:
@@ -65,30 +65,32 @@ def CreateDatabase():
             c.execute("""create table PaymentType (
                 payment_type_Id integer not null primary key autoincrement,
                 customer_Id integer not null,
-                account_number integer, 
+                account_number integer,
                 name text,
                 foreign key (customer_Id) references Customer(customer_Id))""")
         except sqlite3.OperationalError:
             pass
 
         try:
-            c.execute("""create table Order (
+            c.execute("""create table Orders (
                 order_Id integer not null primary key autoincrement,
-                customer_Id integer not null, 
-                payment_type_Id integer, 
+                customer_Id integer not null,
+                payment_type_Id integer,
                 foreign key (customer_Id) references Customer(customer_Id))""")
         except sqlite3.OperationalError:
             pass
+        # c.execute("insert into Orders values (null, 1, 1)")
 
         try:
             c.execute("""create table ProductOrder (
                 product_order_Id integer not null primary key autoincrement,
-                order_Id integer not null, 
+                order_Id integer not null,
                 product_Id integer not null,
-                foreign key (order_Id) references Order(order_Id),
+                foreign key (order_Id) references Orders(order_Id),
                 foreign key (product_Id) references Product(product_Id))""")
         except sqlite3.OperationalError:
             pass
+        # c.execute("insert into ProductOrder values (null, 1, 1)")
 
         conn.commit()
 

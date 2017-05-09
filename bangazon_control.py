@@ -88,7 +88,38 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
     def update_payment_type_for_order(self, active_order_id, payment_type_id):
         pass
 
-    def display_main_menu():
+    def display_products_and_add_to_cart(self):
+        """
+        Display all the products from the product table in the cli. When the customer selects a product from the list the product and active order id's are added to the database.
+
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            wocaldwell
+        """
+        product_order = ProductOrder()
+        product_dict = {}
+        self.counter = 1
+        self.product_list = Product.retrieve_all_products()
+        for product in self.product_list:
+            product_dict[str(self.counter)] = product
+            print(str(self.counter) + '. ' + product[1])
+            self.counter += 1
+        print(str(self.counter) + '. Done adding products')
+        self.product_selection = input('> ')
+        if self.product_selection == str(self.counter):
+            Bangazon = BangazonControl()
+            Bangazon.display_main_menu()
+        else:
+            active_order = Order()
+            product_order.add_product_id_and_order_id_to_product_order_table(active_order.make_order_active(self.choose_active_customer()), int(product_dict[self.product_selection][0]))
+        self.display_products_and_add_to_cart()
+
+    def display_main_menu(self):
         """
         Displays the main menu when bangazon_control.py is run in the cli and directs to other features based on user input.
 
@@ -113,18 +144,19 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         if selection == '3':
             pass
         if selection == '4':
-            pass
+            self.display_products_and_add_to_cart()
         if selection == '5':
             pass
         if selection == '6':
             pass
         if selection == '7':
             sys.exit()
-        BangazonControl.display_main_menu()
+        self.display_main_menu()
 
 
 if __name__ == '__main__':
-    BangazonControl.display_main_menu()
+    Bangazon = BangazonControl()
+    Bangazon.display_main_menu()
 
 
 

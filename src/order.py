@@ -5,7 +5,7 @@ class Order(object):
   """
   This class is to handle interactions with the order table through sqlite
 
-  Methods: 
+  Methods:
           create_order_by_database: simply creates the order in the database
           retrieve_order_by_attributes: it retrieves and returns the order by its attributes
 
