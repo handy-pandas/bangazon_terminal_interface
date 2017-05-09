@@ -29,7 +29,8 @@ def CreateDatabase(database='bangazon.db'):
                 address text,
                 city text,
                 state text,
-                postal_code text)""")
+                postal_code text,
+                phone_number text)""")
 
         except sqlite3.OperationalError:
             customer_table_needs_inserts = False
