@@ -1,8 +1,10 @@
+import sys
 from src.customer import Customer
 from src.order import Order
 from src.payment_type import PaymentType
 from src.product import Product
 from src.product_order import ProductOrder
+
 
 """
 Terminal Interface configuration for the terminal interface for the user interaction.
@@ -77,7 +79,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
 
     def add_product_to_order(self, index_of_product):
         if self.active_customer:
-            self.active_order = self.make_order_active(self.active_customer)            
+            self.active_order = self.make_order_active(self.active_customer)
         pass
 
     def get_sum_of_products_for_current_order(self, active_order_id):
@@ -86,6 +88,43 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
     def update_payment_type_for_order(self, active_order_id, payment_type_id):
         pass
 
+    def display_main_menu():
+        """
+        Displays the main menu when bangazon_control.py is run in the cli and directs to other features based on user input.
+
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            wocaldwell
+        """
+        print('*********************************************************')
+        print('**  Welcome to Bangazon! Command Line Ordering System  **')
+        print('*********************************************************')
+        print('1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to shopping cart\n5. Complete an order\n6. See product popularity\n7. Leave Bangazon!')
+        selection = input('> ')
+        if selection == '1':
+            pass
+        if selection == '2':
+            pass
+        if selection == '3':
+            pass
+        if selection == '4':
+            pass
+        if selection == '5':
+            pass
+        if selection == '6':
+            pass
+        if selection == '7':
+            sys.exit()
+        BangazonControl.display_main_menu()
+
+
+if __name__ == '__main__':
+    BangazonControl.display_main_menu()
 
 
 
