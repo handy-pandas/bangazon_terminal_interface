@@ -57,14 +57,18 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             Talbot Lawrence
         """
-        print("Which customer will be active?")
         list_customer = self.retrieve_all_customers()
         counter = 1
+        
+        print("Which customer will be active?")
+        
         for each_customer in list_customer:
             print("{}. {}".format(counter, each_customer['name']))
             counter += 1
+
         selection = input('> ')
         selection = int(selection)-1
+
         self.active_customer = list_customer[selection]['id']
         
 
@@ -155,26 +159,32 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         print('*********************************************************')
         print('1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to shopping cart\n5. Complete an order\n6. See product popularity\n7. Leave Bangazon!')
         selection = input('> ')
+
         if selection == '1':
             self.menu_create_customer()
+
         if selection == '2':
             self.choose_active_customer()
+
         if selection == '3':
             if self.active_customer == None:
                 self.choose_active_customer()
             self.display_create_payment_type()
+
         if selection == '4':
             if self.active_customer == None:
                 self.choose_active_customer()
-            pass
+            
         if selection == '5':
             if self.active_customer == None:
                 self.choose_active_customer()
-            pass
+            
         if selection == '6':
             pass
+
         if selection == '7':
             sys.exit()
+            
         self.display_main_menu()
 
     def display_create_payment_type(self):
