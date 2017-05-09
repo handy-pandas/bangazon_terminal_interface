@@ -2,7 +2,6 @@
 Terminal Interface configuration for the Customer table interaction in the database
 """
 import sqlite3
-from create_database import CreateDatabase
 
 class Customer(object):
     """
@@ -117,7 +116,6 @@ class Customer(object):
 Below is for developmental purposes only. To allow for creation of the database prior to having a setup function run when the menu appears.
 """
 if __name__ == "__main__":
-    CreateDatabase(database='../bangazon.db')
     test = Customer()
     test_cust = { 'name': 'Bobby', 'address': '123 test me Ave', 'city': 'TestVille', 'state': 'WyTesting', 'postal_code':  '123123', 'phone_number':  '123123'}
 
