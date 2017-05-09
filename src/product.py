@@ -21,7 +21,7 @@ class Product(object):
     def __init__(self):
         pass
 
-    def retrieve_all_products():
+    def retrieve_all_products(self):
         """
         This is a simple query that brings back all products from Prodct table within bangazon db
 
@@ -35,18 +35,10 @@ class Product(object):
             Taylor Perkins
             wocaldwell
         """
-        product_list = []
         with sqlite3.connect('bangazon.db') as conn:
             c = conn.cursor()
 
             c.execute("SELECT product_Id, title, price FROM Product")
-            products_list = c.fetchall()
-            """Print statement for developement testing."""
-            # print(products_list)
-            return products_list
+            self.products_list = c.fetchall()
+            return self.products_list
 
-"""
-Below is for developmental purposes only. To allow for testing of the sql statements during testing.
-"""
-if __name__ == "__main__":
-    Product.retrieve_all_products()

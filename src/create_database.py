@@ -80,7 +80,6 @@ def CreateDatabase(database='bangazon.db'):
                 foreign key (customer_Id) references Customer(customer_Id))""")
         except sqlite3.OperationalError:
             pass
-        # c.execute("insert into Orders values (null, 1, 1)")
 
         try:
             c.execute("""create table ProductOrder (
@@ -91,7 +90,6 @@ def CreateDatabase(database='bangazon.db'):
                 foreign key (product_Id) references Product(product_Id))""")
         except sqlite3.OperationalError:
             pass
-        # c.execute("insert into ProductOrder values (null, 1, 1)")
 
         conn.commit()
 
