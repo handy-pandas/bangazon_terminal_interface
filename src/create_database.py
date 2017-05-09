@@ -73,7 +73,7 @@ def CreateDatabase(database='bangazon.db'):
             pass
 
         try:
-            c.execute("""create table Order (
+            c.execute("""create table Orders (
                 order_Id integer not null primary key autoincrement,
                 customer_Id integer not null, 
                 payment_type_Id integer, 
@@ -86,7 +86,7 @@ def CreateDatabase(database='bangazon.db'):
                 product_order_Id integer not null primary key autoincrement,
                 order_Id integer not null, 
                 product_Id integer not null,
-                foreign key (order_Id) references Order(order_Id),
+                foreign key (order_Id) references Orders(order_Id),
                 foreign key (product_Id) references Product(product_Id))""")
         except sqlite3.OperationalError:
             pass
