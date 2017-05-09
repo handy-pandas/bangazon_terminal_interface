@@ -4,7 +4,7 @@ from src.order import Order
 from src.payment_type import PaymentType
 from src.product import Product
 from src.product_order import ProductOrder
-
+from src.create_database import *
 
 """
 Terminal Interface configuration for the terminal interface for the user interaction.
@@ -88,7 +88,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
     def update_payment_type_for_order(self, active_order_id, payment_type_id):
         pass
 
-    def display_main_menu():
+    def display_main_menu(self):
         """
         Displays the main menu when bangazon_control.py is run in the cli and directs to other features based on user input.
 
@@ -111,7 +111,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         if selection == '2':
             pass
         if selection == '3':
-            pass
+            Bangazon.display_create_payment_type()
         if selection == '4':
             pass
         if selection == '5':
@@ -120,11 +120,38 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             pass
         if selection == '7':
             sys.exit()
-        BangazonControl.display_main_menu()
+        Bangazon.display_main_menu()
+
+    def display_create_payment_type(self):
+        """
+        Displays the create payment type menu for the customer to input their information.
+
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            Nick Nash
+        """
+        print("\n\nEnter payment type (e.g. AMEX, VISA, Mastercard")
+        name = input("> ")
+
+        print("\nEnter account number")
+        account_number = input("> ")
+
+        customer_id = 1
+
+        # Insert active customer id into the dictionary
+        new_payment_type = {'name': name, 'account_number': account_number, 'customer_id': customer_id}
+        payment = PaymentType()
+        payment.add_payment_type_to_database(new_payment_type)
 
 
 if __name__ == '__main__':
-    BangazonControl.display_main_menu()
+    Bangazon = BangazonControl()
+    Bangazon.display_main_menu()
 
 
 
