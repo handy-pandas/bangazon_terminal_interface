@@ -73,7 +73,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         selection = input('> ')
         selection = int(selection)-1
         self.set_active_customer(list_customer[selection]['id'])
-        print(self.active_customer)
+        # print(self.active_customer)
         # return 1
 
     def create_payment_type(self, customer_id, name, account_number):
