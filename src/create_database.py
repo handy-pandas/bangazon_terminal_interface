@@ -91,8 +91,10 @@ def CreateDatabase():
             pass
 
         conn.commit()
-        print('She ran... I think?')
 
+"""
+Below is for developmental purposes only. To allow for creation of the database prior to having a setup function run when the menu appears.
+"""
 if __name__ == "__main__":
     CreateDatabase()
 
