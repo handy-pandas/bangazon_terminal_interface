@@ -4,7 +4,6 @@ from src.order import Order
 from src.payment_type import PaymentType
 from src.product import Product
 from src.product_order import ProductOrder
-from src.create_database import *
 
 """
 Terminal Interface configuration for the terminal interface for the user interaction.
