@@ -10,6 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 Install [pip](https://packaging.python.org/installing/)
+
 Install [Python 3.6](https://www.python.org/downloads/)
 
 
@@ -28,10 +29,10 @@ Setting up the database:
 Run project in cli:
 
 ```
-python src/bangazon_control.py
+python bangazon_control.py
 ```
 In your terminal you should see somthing like this:
-![terminal screen shot]()
+![terminal screen shot](images/main_menu.png?raw=true)
 
 ## Running the tests
 ```
