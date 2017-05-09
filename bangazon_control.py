@@ -122,6 +122,20 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             sys.exit()
         BangazonControl.display_main_menu()
 
+    def display_choose_active_customer():
+        """
+        Displays the choose active customer when the user selects option 2 .
+
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            Talbot Lawrence
+        """
+
 
 if __name__ == '__main__':
     BangazonControl.display_main_menu()
