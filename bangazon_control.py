@@ -4,6 +4,7 @@ from src.order import Order
 from src.payment_type import PaymentType
 from src.product import Product
 from src.product_order import ProductOrder
+from src.create_database import CreateDatabase
 
 
 """
@@ -20,7 +21,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Adam Myers
     """
 
-    def create_customer(self, name, address, state, city, postal_code):
+    def create_customer(self, name, address, state, city, postal_code, phone_number):
         """
         This method creates a dictionary that contains information about the customer and returns that dictionary.
 
@@ -37,7 +38,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             Adam Myers
         """
-        new_customer = { 'name': name, 'address' : address, 'state': state, 'city': city, 'postal_code': postal_code }
+        new_customer = { 'name': name, 'address' : address, 'state': state, 'city': city, 'postal_code': postal_code, 'phone_number': phone_number }
         return new_customer
 
     def set_active_customer(self, active_customer):
@@ -88,7 +89,41 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
     def update_payment_type_for_order(self, active_order_id, payment_type_id):
         pass
 
-    def display_main_menu():
+    def menu_create_customer(self):
+        """
+        Handles the menu interaction for creating a customer
+
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            Adam Myers
+        """
+        print("Enter customer name")
+        name = input("> ")
+
+        print("Enter street address")
+        street_address = input("> ")
+
+        print("Enter city")
+        city = input("> ")
+
+        print("Enter state")
+        state = input("> ")
+
+        print("Enter postal code")
+        postal_code = input("> ")
+        
+        print("Enter phone number")
+        phone_number = input("> ")
+
+        new_customer = self.create_customer(name, street_address, state, city, postal_code, phone_number)
+        self.add_customer_to_database(new_customer)
+
+    def display_main_menu(self):
         """
         Displays the main menu when bangazon_control.py is run in the cli and directs to other features based on user input.
 
@@ -101,13 +136,14 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             wocaldwell
         """
+        CreateDatabase()
         print('*********************************************************')
         print('**  Welcome to Bangazon! Command Line Ordering System  **')
         print('*********************************************************')
         print('1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to shopping cart\n5. Complete an order\n6. See product popularity\n7. Leave Bangazon!')
         selection = input('> ')
         if selection == '1':
-            pass
+            self.menu_create_customer()
         if selection == '2':
             pass
         if selection == '3':
@@ -120,11 +156,12 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             pass
         if selection == '7':
             sys.exit()
-        BangazonControl.display_main_menu()
+        self.display_main_menu()
 
 
 if __name__ == '__main__':
-    BangazonControl.display_main_menu()
+    control = BangazonControl()
+    control.display_main_menu()
 
 
 
