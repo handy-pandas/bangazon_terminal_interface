@@ -3,7 +3,7 @@ Terminal Interface configuration for the initial database structure in the datab
 """
 import sqlite3
 
-def CreateDatabase():
+def CreateDatabase(database='bangazon.db'):
     """
         Creates bangazon.db file in root for intial database structure which includes tables of Customer, Products, PaymentType, Order, ProductOrder.
 
@@ -17,7 +17,7 @@ def CreateDatabase():
             Adam Myers
             Talbot Lawrence
         """
-    with sqlite3.connect('../bangazon.db') as conn:
+    with sqlite3.connect(database) as conn:
         c = conn.cursor()
         customer_table_needs_inserts = True
         product_table_needs_inserts = True
@@ -29,15 +29,16 @@ def CreateDatabase():
                 address text, 
                 city text, 
                 state text, 
-                postal_code text)""")
+                postal_code text,
+                phone_number text)""")
 
         except sqlite3.OperationalError:
             customer_table_needs_inserts = False
 
         if customer_table_needs_inserts:
-            c.execute("insert into Customer values (null, 'Adam', '123 Code Ave', 'CodeVille', 'WyCoding', '8675309')")
-            c.execute("insert into Customer values (null, 'Talbot', '123 Boring Street', 'BoreVille', 'WyBoring', '000000-000')")
-            c.execute("insert into Customer values (null, 'Taylor', '123 Accident Road', 'CrunchVille', 'WyTireScreeching', '911...')")
+            c.execute("insert into Customer values (null, 'Adam', '123 Code Ave', 'CodeVille', 'WyCoding', '8675309', '1234245243')")
+            c.execute("insert into Customer values (null, 'Talbot', '123 Boring Street', 'BoreVille', 'WyBoring', '000000-000', '12312312334')")
+            c.execute("insert into Customer values (null, 'Taylor', '123 Accident Road', 'CrunchVille', 'WyTireScreeching', '911...', '90909090')")
         else:
             pass
 
@@ -96,5 +97,5 @@ def CreateDatabase():
 Below is for developmental purposes only. To allow for creation of the database prior to having a setup function run when the menu appears.
 """
 if __name__ == "__main__":
-    CreateDatabase()
+    CreateDatabase(database='../bangazon.db')
 
