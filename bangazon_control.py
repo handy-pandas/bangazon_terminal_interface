@@ -52,7 +52,23 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         self.active_customer = active_customer
 
     def choose_active_customer(self):
-        return 1
+        """
+        Displays the choose active customer when the user selects option 2 .
+
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            Talbot Lawrence
+        """
+        print("Which customer will be active?")
+
+        selection = input('> ')
+        self.display_create_payment_option()
+        # return 1
 
     def create_payment_type(self, customer_id, name, account_number):
         """
@@ -121,20 +137,6 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         if selection == '7':
             sys.exit()
         BangazonControl.display_main_menu()
-
-    def display_choose_active_customer():
-        """
-        Displays the choose active customer when the user selects option 2 .
-
-        Arguments:
-            n/a
-
-        Returns:
-            n/a
-
-        Author:
-            Talbot Lawrence
-        """
 
 
 if __name__ == '__main__':
