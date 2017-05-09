@@ -7,7 +7,7 @@ def CreateDatabase():
     """
         Creates bangazon.db file in root for intial database structure which includes tables of Customer, Products, PaymentType, Order, ProductOrder.
 
-        Arguements:
+        Arguments:
             N/A
 
         Returns:
