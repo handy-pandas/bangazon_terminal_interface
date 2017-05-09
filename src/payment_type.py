@@ -17,11 +17,6 @@ class PaymentType(object):
   Adam Myers
   """
 
-  def __init__(self):
-    with sqlite3.connect('../bangazon.db') as conn:
-      self.c = conn.cursor()
-      self.payment_type_table_needs_insert = True
-
   def add_payment_type_to_database(self, new_payment_type):
     """
     Add a payment type to the paymetent type table in the bangazon database.
@@ -36,20 +31,19 @@ class PaymentType(object):
     wocaldwell
     Nick Nash
     """
-    if self.payment_type_table_needs_insert:
-      self.c.execute("INSERT INTO PaymentType VALUES (NULL, '{}', '{}', '{}')".format(new_payment_type['account_number'], new_payment_type['name'], new_payment_type['customer_id']))
-    else:
-      pass
+    with sqlite3.connect('../bangazon.db') as conn:
+      c = conn.cursor()
+      c.execute("INSERT INTO PaymentType VALUES (NULL, '{}', '{}', '{}')".format(new_payment_type['customer_id'], new_payment_type['account_number'], new_payment_type['name']))
 
   def retrieve_payment_type_from_database_by_all_attributes(self, new_payment_type):
     """
     Retrieve a payment type from the PaymentType table in the bangazon database.
 
     Arguments:
-    new_payment_type(Dictionary) The attributes of the new payment type.
+      new_payment_type(Dictionary) The attributes of the new payment type.
 
     Returns:
-    new_payment_type(Dictionary) The attributes of the new payment type.
+      new_payment_type(Dictionary) The attributes of the new payment type.
 
     Author:
     wocaldwell
@@ -62,10 +56,10 @@ class PaymentType(object):
     Gets the active user's payment types.
 
     Arguments:
-    new_payment_type(Dictionary) The attributes of the new payment type.
+      new_payment_type(Dictionary) The attributes of the new payment type.
 
     Returns:
-    payment_types(List of Tuples) The payment types separated into tuples.
+      payment_types(List of Tuples) The payment types separated into tuples.
 
     Author:
     Nick Nash

@@ -140,12 +140,10 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         print("\nEnter account number")
         account_number = input("> ")
 
-        customer_id = 1
+        customer_id = self.choose_active_customer()
 
-        # Insert active customer id into the dictionary
-        new_payment_type = {'name': name, 'account_number': account_number, 'customer_id': customer_id}
-        payment = PaymentType()
-        payment.add_payment_type_to_database(new_payment_type)
+        new_payment_type = self.create_payment_type(customer_id, name, account_number)
+        self.add_payment_type_to_database(new_payment_type)
 
 
 if __name__ == '__main__':
