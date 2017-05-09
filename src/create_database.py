@@ -1,5 +1,5 @@
 """
-Terminal Interface configuration for the Customer table interaction in the database
+Terminal Interface configuration for the initial database structure in the database
 """
 import sqlite3
 
