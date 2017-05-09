@@ -6,7 +6,6 @@ from src.product import Product
 from src.product_order import ProductOrder
 from src.create_database import CreateDatabase
 
-
 """
 Terminal Interface configuration for the terminal interface for the user interaction.
 """
@@ -147,7 +146,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         if selection == '2':
             pass
         if selection == '3':
-            pass
+            self.display_create_payment_type()
         if selection == '4':
             pass
         if selection == '5':
@@ -158,19 +157,31 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             sys.exit()
         self.display_main_menu()
 
+    def display_create_payment_type(self):
+        """
+        Displays the create payment type menu for the customer to input their information.
+
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            Nick Nash
+        """
+        print("\n\nEnter payment type (e.g. AMEX, VISA, Mastercard")
+        name = input("> ")
+
+        print("\nEnter account number")
+        account_number = input("> ")
+
+        customer_id = self.choose_active_customer()
+
+        new_payment_type = self.create_payment_type(customer_id, name, account_number)
+        self.add_payment_type_to_database(new_payment_type)
+
 
 if __name__ == '__main__':
-    control = BangazonControl()
-    control.display_main_menu()
-
-
-
-
-
-
-
-
-
-
-
-
+    Bangazon = BangazonControl()
+    Bangazon.display_main_menu()
