@@ -126,11 +126,17 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             counter += 1
         print("{}. {}".format(counter, "Done adding products"))
         product_selection = input('> ')
-        if product_selection == str(counter):
-            self.display_main_menu()
-        else:
-            product_selection = int(product_selection)-1
-            self.add_product_id_and_order_id_to_product_order_table(self.make_order_active(self.active_customer), int(product_list[product_selection][0]))
+        try:
+            product_selection = int(product_selection)
+            if product_selection == counter:
+                self.display_main_menu()
+            elif product_selection in range(1, counter):
+                product_selection = int(product_selection)-1
+                self.add_product_id_and_order_id_to_product_order_table(self.make_order_active(self.active_customer), int(product_list[product_selection][0]))
+            else:
+                print("That ain't on the list!!")
+        except ValueError:
+            print('Numbers only, dorkus.')
         self.display_products_and_add_to_cart()
 
     def menu_create_customer(self):

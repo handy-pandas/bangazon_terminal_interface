@@ -39,6 +39,6 @@ class Product(object):
             c = conn.cursor()
 
             c.execute("SELECT product_Id, title, price FROM Product")
-            self.products_list = c.fetchall()
-            return self.products_list
+            products_list = c.fetchall()
+            return products_list
 
