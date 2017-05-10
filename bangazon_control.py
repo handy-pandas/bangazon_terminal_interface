@@ -59,9 +59,9 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         """
         list_customer = self.retrieve_all_customers()
         counter = 1
-        
+
         print("Which customer will be active?")
-        
+
         for each_customer in list_customer:
             print("{}. {}".format(counter, each_customer['name']))
             counter += 1
@@ -70,7 +70,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         selection = int(selection)-1
 
         self.active_customer = list_customer[selection]['id']
-        
+
 
     def create_payment_type(self, customer_id, name, account_number):
         """
@@ -98,7 +98,6 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
     def add_product_to_order(self, index_of_product):
         if self.active_customer:
             self.active_order = self.make_order_active(self.active_customer)
-        pass
 
     def get_sum_of_products_for_current_order(self, active_order_id):
         pass
@@ -106,9 +105,43 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
     def update_payment_type_for_order(self, active_order_id, payment_type_id):
         pass
 
+
+    def display_products_and_add_to_cart(self):
+        """
+        Display all the products from the product table in the cli. When the customer selects a product from the list the product and active order id's are added to the database.
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            wocaldwell
+        """
+        product_list = self.retrieve_all_products()
+        counter = 1
+        for product in product_list:
+            print("{}. {}".format(counter, product[1]))
+            counter += 1
+        print("{}. {}".format(counter, "Done adding products"))
+        product_selection = input('> ')
+        try:
+            product_selection = int(product_selection)
+            if product_selection == counter:
+                self.display_main_menu()
+            elif product_selection in range(1, counter):
+                product_selection = product_selection-1
+                self.add_product_id_and_order_id_to_product_order_table(self.make_order_active(self.active_customer), product_list[product_selection][0])
+            else:
+                print("That ain't on the list!!")
+        except ValueError:
+            print('Numbers only, dorkus.')
+        self.display_products_and_add_to_cart()
+
     def menu_create_customer(self):
         """
         Handles the menu interaction for creating a customer
+
 
         Arguments:
             n/a
@@ -133,7 +166,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
 
         print("Enter postal code")
         postal_code = input("> ")
-        
+
         print("Enter phone number")
         phone_number = input("> ")
 
@@ -174,17 +207,18 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         if selection == '4':
             if self.active_customer == None:
                 self.choose_active_customer()
-            
+            self.display_products_and_add_to_cart()
+
         if selection == '5':
             if self.active_customer == None:
                 self.choose_active_customer()
-            
+
         if selection == '6':
             pass
 
         if selection == '7':
             sys.exit()
-            
+
         self.display_main_menu()
 
     def display_create_payment_type(self):
@@ -200,7 +234,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             Nick Nash
         """
-        print("\n\nEnter payment type (e.g. AMEX, VISA, Mastercard")
+        print("\n\nEnter payment type (e.g. AMEX, VISA, Mastercard)")
         name = input("> ")
 
         print("\nEnter account number")

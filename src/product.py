@@ -1,10 +1,11 @@
 """
 Terminal Interface configuration for the Product table interaction in the database
 """
+import sqlite3
 
 class Product(object):
     """
-    Description:     
+    Description:
         This class is to handle interactions with the products table through sqlite
 
     Methods:
@@ -24,16 +25,20 @@ class Product(object):
         """
         This is a simple query that brings back all products from Prodct table within bangazon db
 
-        Arguments: 
+        Arguments:
             None
 
         Returns:
             products_list (LIST): List of tuples representing all products in db
 
-        Author: 
+        Author:
             Taylor Perkins
+            wocaldwell
         """
+        with sqlite3.connect('bangazon.db') as conn:
+            c = conn.cursor()
 
-        products_list = [(1, 'ball', '12.99')]
-        return products_list
+            c.execute("SELECT product_Id, title, price FROM Product")
+            products_list = c.fetchall()
+            return products_list
 
