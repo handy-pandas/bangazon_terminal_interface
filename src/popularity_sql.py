@@ -50,6 +50,19 @@ def query_popularity_view(database='bangazon.db'):
         return queries
 
 def proper_spacing_product(title):
+    """
+    Formats the spacing of the product column for displaying in the terminal
+
+    Arguments:
+        title (String): title of the product for displaying
+
+    Returns:
+        title (String): title of the product for displaying formated for 18 characters
+
+    Author:
+        Adam Myers
+        Talbot Lawrence
+    """
 
     length = len(title)
 
@@ -65,6 +78,19 @@ def proper_spacing_product(title):
     return title
 
 def proper_spacing_order_and_customer(number):
+    """
+    Formats the spacing of the order column and customer column for displaying in the terminal
+
+    Arguments:
+        number (integer): integer representing the totals for respective fields of orders and customers
+
+    Returns:
+        number (integer): integer representing the totals for respective fields of orders and customers with proper spacing of 11 characters
+
+    Author:
+        Adam Myers
+        Talbot Lawrence
+    """
 
     number = str(number)
 
@@ -81,6 +107,19 @@ def proper_spacing_order_and_customer(number):
     return number
 
 def proper_spacing_revenue(number):
+    """
+    Formats the spacing of the order revenue for displaying in the terminal
+
+    Arguments:
+        number (integer): integer representing the totals for revenue
+
+    Returns:
+        number (integer): integer representing the totals revenue with proper spacing of 15 characters
+
+    Author:
+        Adam Myers
+        Talbot Lawrence
+    """
 
     number = str(number)
     length = len(number)
@@ -106,6 +145,19 @@ def proper_spacing_revenue(number):
     return number
 
 def add_comma(string):
+    """
+    This method adds comma's for lengthy numbers
+
+    Arguments:
+        number (integer): integer
+
+    Returns:
+        number (string): string of a number with included properly spaced commas
+
+    Author:
+        Adam Myers
+        Talbot Lawrence
+    """
 
     string = string[::-1]
     broken_up = [ string[start:start+3] for start in range(0, len(string), 3) ]
