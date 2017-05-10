@@ -98,7 +98,6 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
     def add_product_to_order(self, index_of_product):
         if self.active_customer:
             self.active_order = self.make_order_active(self.active_customer)
-        pass
 
     def get_sum_of_products_for_current_order(self, active_order_id):
         pass
@@ -131,8 +130,8 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             if product_selection == counter:
                 self.display_main_menu()
             elif product_selection in range(1, counter):
-                product_selection = int(product_selection)-1
-                self.add_product_id_and_order_id_to_product_order_table(self.make_order_active(self.active_customer), int(product_list[product_selection][0]))
+                product_selection = product_selection-1
+                self.add_product_id_and_order_id_to_product_order_table(self.make_order_active(self.active_customer), product_list[product_selection][0])
             else:
                 print("That ain't on the list!!")
         except ValueError:
