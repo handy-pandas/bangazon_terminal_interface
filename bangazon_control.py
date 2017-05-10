@@ -119,19 +119,18 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             wocaldwell
         """
-        self.product_dict = {}
-        self.counter = 1
-        self.product_list = self.retrieve_all_products()
-        for product in self.product_list:
-            self.product_dict[str(self.counter)] = product
-            print(str(self.counter) + '. ' + product[1])
-            self.counter += 1
-        print(str(self.counter) + '. Done adding products')
-        self.product_selection = input('> ')
-        if self.product_selection == str(self.counter):
+        product_list = self.retrieve_all_products()
+        counter = 1
+        for product in product_list:
+            print("{}. {}".format(counter, product[1]))
+            counter += 1
+        print("{}. {}".format(counter, "Done adding products"))
+        product_selection = input('> ')
+        if product_selection == str(counter):
             self.display_main_menu()
         else:
-            self.add_product_id_and_order_id_to_product_order_table(self.make_order_active(self.active_customer), int(self.product_dict[self.product_selection][0]))
+            product_selection = int(product_selection)-1
+            self.add_product_id_and_order_id_to_product_order_table(self.make_order_active(self.active_customer), int(product_list[product_selection][0]))
         self.display_products_and_add_to_cart()
 
     def menu_create_customer(self):
