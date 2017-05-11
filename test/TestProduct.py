@@ -1,12 +1,18 @@
-# import unittest
+import unittest
+from unittest.mock import *
 
-# import sys; sys.path.append('../')
-# from src.product import Product
+import sys; sys.path.append('../')
+from bangazon_control import BangazonControl
 
-# class TestProduct(unittest.TestCase):
+class TestProduct(unittest.TestCase):
 
-#   def test_if_products_exists_in_database(self):
-#     product = Product()
-#     products = product.retrieve_all_products()
+  def test_if_products_exists_in_database(self):
+    control = BangazonControl()
 
-#     self.assertIsNotNone(products)
+    with patch('sqlite3.connect'):
+            with patch('sqlite3.connect.cursor'):
+                with patch('sqlite3.connect.cursor.fetchall', return_value=[()]):
+                    
+                    products = control.retrieve_all_products()
+
+                    self.assertIsNotNone(products)
