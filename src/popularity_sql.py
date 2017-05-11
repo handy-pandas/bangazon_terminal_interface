@@ -26,13 +26,13 @@ def query_popularity_view(database='bangazon.db'):
             join ProductOrder po on pro.product_Id = po.product_Id 
             join Orders ord on po.order_Id = ord.order_Id 
             join Customer cu on ord.customer_Id = cu.customer_Id 
+            where ord.payment_type_Id is not null
             group by pro.title  
             order by ord.order_Id, cu.customer_Id, pro.price DESC
             limit 4
             """)
 
         query_1 = c.fetchall()
-        print(query_1)
 
         c.execute("""
             select count(ord.order_Id), count(cu.customer_Id), sum(pro.price) 
@@ -40,11 +40,10 @@ def query_popularity_view(database='bangazon.db'):
             join ProductOrder po on pro.product_Id = po.product_Id 
             join Orders ord on po.order_Id = ord.order_Id 
             join Customer cu on ord.customer_Id = cu.customer_Id 
-            group by ord.order_Id, cu.customer_Id, pro.price
+            where ord.payment_type_Id is not null
             """)
 
         query_2 = c.fetchall()
-        print(query_2)
 
         queries = { 'Popularity': query_1, 'Totals': query_2 }
 
@@ -165,49 +164,7 @@ def add_comma(string):
     joined = ','.join(broken_up)
     return joined[::-1]
 
-"""
-Below is for developmental purposes only. To allow for retrieval before having functionality of menu options.
-"""
-if __name__ == "__main__":
-    query_popularity_view(database='../bangazon.db')
-    # Product 18 characters with one constant space (so 17 available)
-    # Order 11 characters
-    # Customer 11 characters
-    # Revenue 15 characters
 
-    # test1 = 'spacingtest'
-    # test2 = 1234
-    # test3 = 2134
-    # test4 = 1234.01
-    # test22 = 'a'
-    # test33 = 'asdflkjasdflkjasdf'
-
-    # test1 = proper_spacing_product(test1)
-    # test22 = proper_spacing_product(test22)
-    # test33 = proper_spacing_product(test33)
-
-    # test2 = proper_spacing_order_and_customer(test2)
-    # test3 = proper_spacing_order_and_customer(test3)
-    # test4 = proper_spacing_revenue(test4)
-
-    # total1 = 123123
-    # total2 = 1235324
-    # total3 = 45345324234.01
-
-    # total1 = proper_spacing_order_and_customer(total1)
-    # total2 = proper_spacing_order_and_customer(total2)
-    # total3 = proper_spacing_revenue(total3)
-
-
-
-
-    # print("Product           Orders     Customers  Revenue")
-    # print("*******************************************************")
-    # print("{} {}{}${}".format(test1, test2, test3, test4))
-    # print("{} {}{}${}".format(test22, test2, test3, test4))
-    # print("{} {}{}${}".format(test33, test2, test3, test4))
-    # print("*******************************************************")
-    # print("Totals:           {}{}${}".format(total1, total2, total3))
 
 
 
