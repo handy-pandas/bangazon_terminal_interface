@@ -79,30 +79,21 @@ class Order(object):
 
   def get_specific_order(self, active_order_id):
     """Summary
-    
+
     Args:
-        active_order_id (Int): The active order is the order that is currently attached to the customer
-    
+      active_order_id (Int): The active order is the order that is currently attached to the customer
+
     Returns:
-        closed_order (Int): integer for the order that the customer has built 
+      closed_order (Int): integer for the order that the customer has built 
 
     Author:
-        Nick Nash
+      Nick Nash
     """
     with sqlite3.connect('bangazon.db') as conn:
       c = conn.cursor()
-      c.execute("SELECT * FROM Orders WHERE order_Id ='{}'".format(active_order_id))
-
-      
-
-    closed_order = [(1, 1, 1)]
-    return closed_order[0][2]
-
-
-
-
-
-
+      c.execute("SELECT SUM(price) FROM Product LEFT JOIN ProductOrder ON ProductOrder.product_Id = Product.product_Id LEFT JOIN Orders ON Orders.order_Id = ProductOrder.order_Id WHERE Orders.order_Id = '{}'".format(active_order_id))
+      current_order = c.fetchall()
+    return current_order[0][0]
 
 
 

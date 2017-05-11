@@ -5,6 +5,7 @@ from src.payment_type import PaymentType
 from src.product import Product
 from src.product_order import ProductOrder
 from src.create_database import CreateDatabase
+from src.popularity_sql import *
 
 """
 Terminal Interface configuration for the terminal interface for the user interaction.
@@ -224,7 +225,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             self.complete_order()
 
         if selection == '6':
-            pass
+            self.display_popularity()
 
         if selection == '7':
             sys.exit()
@@ -253,10 +254,11 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         new_payment_type = self.create_payment_type(self.active_customer, name, account_number)
         self.add_payment_type_to_database(new_payment_type)
 
+
     def complete_order(self):
         """
         Displays the order total and allows the customer to confirm the purchase.
-
+        
         Arguments:
             n/a
 
@@ -272,10 +274,70 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             input("> ")
             pass
         else: 
-            self.get_specific_order(self.active_order_pk)
-            print("\nYour order total is ${}. Ready to purchase?".format())
+            active_order = self.get_specific_order(self.active_order_pk)
+            print("\nYour order total is ${}. Ready to purchase?".format(active_order))
+            choice = input("(Y/N) > ")
+            if choice == "Y":
+                list_of_payment_types = self.get_active_users_payment_types(self.active_customer)
+                print("\n\nChoose a payment option")
+                counter = 1
+                for payment in list_of_payment_types:
+                    print("{}. {}".format(counter, payment[0]))
+                    counter += 1
+                chosen_payment = input("> ")
+                try:
+                    chosen_payment = int(chosen_payment)
+                    if chosen_payment in range(1, counter):
+                        print("\nYour order is complete! Press any key to return to main menu.")
+                        input()
+                        self.display_main_menu()
+                    else:
+                        print("\nPlease choose a valid option!\n")
+                        # self.payment_process()
+                except ValueError:
+                    print("\nPlease select a number!\n")
+            elif choice == "N":
+                print("\n")
+            else:
+                print("\nPlease input a valid choice!\n")
+                self.complete_order()
 
+    
+    def display_popularity(self):
+        """
+        Displays popularity view of the popular products and their totals
 
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            Adam Myers
+            Talbot Lawrence
+        """
+        queries = query_popularity_view()
+
+        print("\nProduct           Orders     Customers  Revenue")
+        print("*******************************************************")
+        for each in queries['Popularity']:
+            each = list(each)
+            each[0] = proper_spacing_product(each[0])
+            each[1] = proper_spacing_order_and_customer(each[1])
+            each[2] = proper_spacing_order_and_customer(each[2])
+            each[3] = proper_spacing_revenue(each[3])
+            print("{} {}{}${}".format(each[0], each[1], each[2], each[3]))
+
+        print("*******************************************************")
+        queries['Totals'][0] = list(queries['Totals'][0])
+        queries['Totals'][0][0] = proper_spacing_order_and_customer(queries['Totals'][0][0])
+        queries['Totals'][0][1] = proper_spacing_order_and_customer(queries['Totals'][0][1])
+        queries['Totals'][0][2] = proper_spacing_revenue(queries['Totals'][0][2])
+
+        print("Totals:           {}{}${}".format(queries['Totals'][0][0], queries['Totals'][0][1], queries['Totals'][0][2]))
+
+        input("\nPress Return to Continue...\n")
 
 
 if __name__ == '__main__':
