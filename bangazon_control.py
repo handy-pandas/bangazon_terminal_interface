@@ -278,7 +278,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
 
         print("Totals:           {}{}${}".format(queries['Totals'][0][0], queries['Totals'][0][1], queries['Totals'][0][2]))
 
-        input("\nPress Any Key to Continue...\n")
+        input("\nPress Return to Continue...\n")
 
 
 if __name__ == '__main__':
