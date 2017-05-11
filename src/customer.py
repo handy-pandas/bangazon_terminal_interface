@@ -27,6 +27,9 @@ class Customer(object):
         Arguments:
             customer (Dictionary): needs to contain attributes of name, address, city, state, postal_code
 
+        Returns:
+            n/a
+
         Author:
             Adam Myers
         """
@@ -90,27 +93,33 @@ class Customer(object):
         This method makes a query to db and brings back all current customers
 
         Arguments:
-            N/A
+            n/a
 
         Returns:
-            customer_list (LIST): List of Dictionaries representing all customers from the database.
+            (List): List of Dictionaries representing all customers from the database.
 
         Author: 
             Adam Myers
         """
+
+        # Connecting to the database
         with sqlite3.connect(database) as conn:
+
+            # Creating a cursor
             c = conn.cursor()
 
+            # Generating a query and executing that query
             c.execute("select * from Customer")
+
+            # Fetching data from previously executed query
             queried_customers = c.fetchall()
 
-            customer_list = list()
-
-            for each_customer in queried_customers:
+            # Post processing
+            for cust_index, each_customer in enumerate(queried_customers):
                 customer = { 'id': each_customer[0], 'name': each_customer[1] }
-                customer_list.append(customer)
+                queried_customers[cust_index] = customer
 
-            return customer_list
+            return queried_customers
 
 """
 Below is for developmental purposes only. To allow for creation of the database prior to having a setup function run when the menu appears.
