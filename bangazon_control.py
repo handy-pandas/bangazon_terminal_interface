@@ -67,9 +67,17 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             counter += 1
 
         selection = input('> ')
-        selection = int(selection)-1
-
-        self.active_customer = list_customer[selection]['id']
+        try:
+            selection = int(selection)
+            if selection in range(1, counter):
+                selection = selection-1
+                self.active_customer = list_customer[selection]['id']
+            else:
+                print("That number is not on the list.")
+                self.choose_active_customer()
+        except ValueError:
+            print('Numbers only, dorkus.')
+            self.choose_active_customer()
 
 
     def create_payment_type(self, customer_id, name, account_number):
