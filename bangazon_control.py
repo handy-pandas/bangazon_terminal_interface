@@ -22,6 +22,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
 
     def __init__(self):
         self.active_customer = None
+        self.active_order_pk = None
 
 
     def create_customer(self, name, address, state, city, postal_code, phone_number):
@@ -220,6 +221,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         if selection == '5':
             if self.active_customer == None:
                 self.choose_active_customer()
+            self.complete_order()
 
         if selection == '6':
             pass
@@ -250,6 +252,30 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
 
         new_payment_type = self.create_payment_type(self.active_customer, name, account_number)
         self.add_payment_type_to_database(new_payment_type)
+
+    def complete_order(self):
+        """
+        Displays the order total and allows the customer to confirm the purchase.
+
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            Nick Nash
+        """
+        # self.get_specific_order(self.active_order_pk)
+        if self.active_order_pk == None:
+            print("\nPlease add some products to your order first. Press any key to return to main menu.\n")
+            input("> ")
+            pass
+        else: 
+            self.get_specific_order(self.active_order_pk)
+            print("\nYour order total is ${}. Ready to purchase?".format())
+
+
 
 
 if __name__ == '__main__':

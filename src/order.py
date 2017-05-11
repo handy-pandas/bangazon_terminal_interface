@@ -71,13 +71,30 @@ class Order(object):
     if active_order == []:
       self.create_order_in_database(active_customer_id)
       active_order = self.retrieve_order_by_payment_type_none(active_customer_id)
-      active_order_pk = active_order[0][0]
-      return active_order_pk
+      self.active_order_pk = active_order[0][0]
+      return self.active_order_pk
     else:
-      active_order_pk = active_order[0][0]
-      return active_order_pk
+      self.active_order_pk = active_order[0][0]
+      return self.active_order_pk
 
   def get_specific_order(self, active_order_id):
+    """Summary
+    
+    Args:
+        active_order_id (Int): The active order is the order that is currently attached to the customer
+    
+    Returns:
+        closed_order (Int): integer for the order that the customer has built 
+
+    Author:
+        Nick Nash
+    """
+    with sqlite3.connect('bangazon.db') as conn:
+      c = conn.cursor()
+      c.execute("SELECT * FROM Orders WHERE order_Id ='{}'".format(active_order_id))
+
+      
+
     closed_order = [(1, 1, 1)]
     return closed_order[0][2]
 
