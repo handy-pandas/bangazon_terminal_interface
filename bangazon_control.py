@@ -256,6 +256,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
 
         Author:
             Adam Myers
+            Talbot Lawrence
         """
         queries = query_popularity_view()
 

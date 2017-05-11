@@ -11,7 +11,7 @@ def query_popularity_view(database='bangazon.db'):
         n/a
 
     Returns:
-        queries (Dictionary): 
+        queries (Dictionary): dictionary of both queries with keys of Totals and Popularity 
 
     Author:
         Adam Myers
