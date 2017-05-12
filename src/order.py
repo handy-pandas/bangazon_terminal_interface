@@ -95,5 +95,21 @@ class Order(object):
       current_order = c.fetchall()
     return current_order[0][0]
 
+  def update_order(self, payment_type_id):
+    """Summary
+
+    Args:
+
+    Returns:
+
+    Author:
+      Adam Myers
+    """
+    with sqlite3.connect("bangazon.db") as conn:
+      c = conn.cursor()
+
+      c.execute("update Orders set payment_type_Id = '{}' where order_Id = '{}'".format(payment_type_id, self.active_order_pk))
+
+      conn.commit()
 
 

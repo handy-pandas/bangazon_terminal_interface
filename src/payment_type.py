@@ -54,7 +54,7 @@ class PaymentType(object):
     return new_payment_type
 
 
-  def get_active_users_payment_types(self, active_customer_id):
+  def get_active_users_payment_types(self, active_customer_id, database="bangazon.db"):
     """
     Gets the active user's payment types.
 
@@ -67,10 +67,15 @@ class PaymentType(object):
     Author:
       Nick Nash
     """
-    with sqlite3.connect("bangazon.db") as conn:
+    with sqlite3.connect(database) as conn:
       c = conn.cursor()
-      c.execute("SELECT PaymentType.name FROM PaymentType LEFT JOIN Customer ON PaymentType.customer_Id = Customer.customer_Id WHERE Customer.customer_Id is '{}'".format(active_customer_id))
+      c.execute("SELECT PaymentType.payment_type_Id, PaymentType.name FROM PaymentType LEFT JOIN Customer ON PaymentType.customer_Id = Customer.customer_Id WHERE Customer.customer_Id is '{}'".format(active_customer_id))
       payments = c.fetchall()
     return payments
+
+if __name__ == "__main__":
+  test = PaymentType()
+  print_me = test.get_active_users_payment_types(2, database="../bangazon.db")
+  print(print_me)
 
 

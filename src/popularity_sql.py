@@ -26,7 +26,7 @@ def query_popularity_view(database='bangazon.db'):
             join ProductOrder po on pro.product_Id = po.product_Id 
             join Orders ord on po.order_Id = ord.order_Id 
             join Customer cu on ord.customer_Id = cu.customer_Id 
-            where ord.payment_type_Id is not null
+            where ord.payment_type_Id is not Null
             group by pro.title  
             order by ord.order_Id, cu.customer_Id, pro.price DESC
             limit 4
@@ -40,7 +40,7 @@ def query_popularity_view(database='bangazon.db'):
             join ProductOrder po on pro.product_Id = po.product_Id 
             join Orders ord on po.order_Id = ord.order_Id 
             join Customer cu on ord.customer_Id = cu.customer_Id 
-            where ord.payment_type_Id is not null
+            where ord.payment_type_Id is not Null
             """)
 
         query_2 = c.fetchall()
@@ -128,9 +128,13 @@ def proper_spacing_revenue(number):
         integer = number[:number.index('.')]
         change = number[number.index('.'):]
 
+        if len(change) > 3:
+            change = change[:3]
+
         if len(integer) > 3:
             integer = add_comma(integer)
             number = integer + change
+
     except ValueError:
         pass
 
