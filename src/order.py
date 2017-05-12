@@ -71,15 +71,10 @@ class Order(object):
     if active_order == []:
       self.create_order_in_database(active_customer_id)
       active_order = self.retrieve_order_by_payment_type_none(active_customer_id)
-      active_order_pk = active_order[0][0]
-      return active_order_pk
-    else:
-      active_order_pk = active_order[0][0]
-      return active_order_pk
 
-  def get_specific_order(self, active_order_id):
-    closed_order = [(1, 1, 1)]
-    return closed_order[0][2]
+    active_order_pk = active_order[0][0]
+    return active_order_pk
+
 
 
 

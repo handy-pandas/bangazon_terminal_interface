@@ -41,29 +41,6 @@ class Customer(object):
 
             conn.commit()
 
-    def retrieve_customer_from_database_by_all_attributes(self, customer, database='bangazon.db'):
-        """
-        This method retrieves the customer from the Customer database based on the name
-
-        Arguments:
-            customer (dictionary): containing attributes of name, address, state, city, postal_code.
-
-        Returns:
-            (Dictionary): containing attributes of name, address, state, city, postal_code from the database
-
-        Author:
-            Adam Myers
-        """
-        with sqlite3.connect(database) as conn:
-            c = conn.cursor()
-
-            c.execute("select * from Customer where Customer.name = '{}' and Customer.address = '{}' and Customer.state = '{}' and Customer.city = '{}' and Customer.postal_code = '{}' limit 1".format(customer['name'], customer['address'], customer['state'], customer['city'], customer['postal_code']))
-
-            query = c.fetchall()
-            query = query[0]
-            queried_customer = { 'id': query[0], 'name': query[1], 'address': query[2], 'city': query[3], 'state': query[4], 'postal_code': query[5] }
-            return queried_customer
-
     def retrieve_customer_from_database_by_id(self, customer_id, database='bangazon.db'):
         """
         This method retrieves the customer from the Customer database based on the name
@@ -131,12 +108,10 @@ if __name__ == "__main__":
     test.add_customer_to_database(test_cust, database='../bangazon.db')
     print_me = test.retrieve_all_customers(database='../bangazon.db')
     print_test_2 = test.retrieve_customer_from_database_by_id(1, database='../bangazon.db')
-    print_test_3 = test.retrieve_customer_from_database_by_all_attributes(test_cust, database='../bangazon.db')
 
     print("Added customer 'Bobby' :)")
     print("All customers: {}".format(print_me))
     print("Customer by ID 1: {}".format(print_test_2))
-    print("Customer by all Attributes: {}".format(print_test_3))
 
 
 

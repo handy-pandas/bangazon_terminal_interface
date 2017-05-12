@@ -57,28 +57,25 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
 
         Author:
             Talbot Lawrence
+            Adam Myers
         """
         list_customer = self.retrieve_all_customers()
-        counter = 1
 
         print("Which customer will be active?")
 
-        for each_customer in list_customer:
-            print("{}. {}".format(counter, each_customer['name']))
-            counter += 1
+        for cust_index, each_customer in enumerate(list_customer):
+            print("{}. {}".format(cust_index+1, each_customer['name']))
 
         selection = input('> ')
+
         try:
             selection = int(selection)
-            if selection in range(1, counter):
-                selection = selection-1
-                self.active_customer = list_customer[selection]['id']
-            else:
-                print("That number is not on the list.")
-                self.choose_active_customer()
-        except ValueError:
-            print('Numbers only, dorkus.')
+            selection = selection-1
+            self.active_customer = list_customer[selection]['id']
+        except (ValueError, IndexError):
+            print('\nYour selection does not exist.\nPlease try again.\n')
             self.choose_active_customer()
+
 
 
     def create_payment_type(self, customer_id, name, account_number):
@@ -97,9 +94,6 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         """
         new_payment_type = {'customer_id': customer_id, 'name': name, 'account_number': account_number}
         return new_payment_type
-
-    def save_all_customers(self):
-        pass
 
     def save_all_products(self):
         self.products = [(1, 12.99, 'ball')]
