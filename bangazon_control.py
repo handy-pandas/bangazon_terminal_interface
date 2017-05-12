@@ -24,6 +24,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
     def __init__(self):
         self.active_customer = None
         self.active_order_pk = None
+        self.display_menu = 0
 
 
     def create_customer(self, name, address, state, city, postal_code, phone_number):
@@ -135,17 +136,22 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             counter += 1
         print("{}. {}".format(counter, "Done adding products"))
         product_selection = input('> ')
+
         try:
             product_selection = int(product_selection)
             if product_selection == counter:
-                self.display_main_menu()
+                self.display_menu = 0
+                return
+
             elif product_selection in range(1, counter):
                 product_selection = product_selection-1
                 self.add_product_id_and_order_id_to_product_order_table(self.make_order_active(self.active_customer), product_list[product_selection][0])
             else:
                 print("That ain't on the list!!")
+
         except ValueError:
             print('Numbers only, dorkus.')
+
         self.display_products_and_add_to_cart()
 
     def menu_create_customer(self):
@@ -196,7 +202,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             wocaldwell
         """
-        CreateDatabase()
+        self.display_menu = 1
         print('*********************************************************')
         print('**  Welcome to Bangazon! Command Line Ordering System  **')
         print('*********************************************************')
@@ -230,7 +236,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         if selection == '7':
             sys.exit()
 
-        self.display_main_menu()
+        self.display_menu = 0
 
     def display_create_payment_type(self):
         """
@@ -267,45 +273,58 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
 
         Author:
             Nick Nash
+            Adam Myers
         """
         # self.get_specific_order(self.active_order_pk)
         if self.active_order_pk == None:
-            print("\nPlease add some products to your order first. Press any key to return to main menu.\n")
-            input("> ")
-            pass
-        else: 
-            active_order = self.get_specific_order(self.active_order_pk)
-            print("\nYour order total is ${}. Ready to purchase?".format(round(active_order, 2)))
-            choice = input("(Y/N) > ")
-            if choice == "Y" or choice =="y":
-                list_of_payment_types = self.get_active_users_payment_types(self.active_customer)
-                print(list_of_payment_types)
-                if list_of_payment_types == []:
-                    print("\nPlease create a new payment type!\n")
-                    self.display_create_payment_type()
+            input("\nPlease add some products to your order first. Press Return key to return to main menu.\n")
+            return
+
+        active_order = self.get_specific_order(self.active_order_pk)
+        print("\nYour order total is ${}. Ready to purchase?".format(round(active_order, 2)))
+        choice = input("(Y/N) > ")
+
+        if choice == "Y" or choice =="y":
+            list_of_payment_types = self.get_active_users_payment_types(self.active_customer)
+
+            if list_of_payment_types == []:
+                print("\nPlease create a new payment type!\n")
+                self.display_create_payment_type()
+
+            list_of_payment_types = self.get_active_users_payment_types(self.active_customer)
+
+            print("\n\nChoose a payment option")
+            counter = 1
+
+            for payment in list_of_payment_types:
+                print("{}. {}".format(counter, payment[1]))
+                counter += 1
+
+            chosen_payment = input("> ")
+
+            try:
+                chosen_payment = int(chosen_payment)
+
+                if chosen_payment in range(1, counter):
+                    self.update_order(list_of_payment_types[chosen_payment-1][0])
+
+                    input("\nYour order is complete! Press any key to return to main menu.\n")
+
+                    self.display_menu = 0
+                    return
+
                 else:
-                    print("\n\nChoose a payment option")
-                    counter = 1
-                    for payment in list_of_payment_types:
-                        print("{}. {}".format(counter, payment[0]))
-                        counter += 1
-                    chosen_payment = input("> ")
-                    try:
-                        chosen_payment = int(chosen_payment)
-                        if chosen_payment in range(1, counter):
-                            print("\nYour order is complete! Press any key to return to main menu.")
-                            input()
-                            self.display_main_menu()
-                        else:
-                            print("\nPlease choose a valid option!\n")
-                            # self.payment_process()
-                    except ValueError:
-                        print("\nPlease select a number!\n")
-            elif choice == "N" or choice == "n":
-                print("\n")
-            else:
-                print("\nPlease input a valid choice!\n")
-                self.complete_order()
+                    print("\nPlease choose a valid option!\n")
+
+            except ValueError:
+                print("\nPlease select a number!\n")
+
+        elif choice == "N" or choice == "n":
+            print("\n")
+
+        else:
+            print("\nPlease input a valid choice!\n")
+            self.complete_order()
 
     
     def display_popularity(self):
@@ -347,4 +366,5 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
 
 if __name__ == '__main__':
     Bangazon = BangazonControl()
-    Bangazon.display_main_menu()
+    while Bangazon.display_menu == 0:
+        Bangazon.display_main_menu()
