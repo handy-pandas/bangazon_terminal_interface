@@ -275,9 +275,9 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             pass
         else: 
             active_order = self.get_specific_order(self.active_order_pk)
-            print("\nYour order total is ${}. Ready to purchase?".format(active_order))
+            print("\nYour order total is ${}. Ready to purchase?".format(round(active_order, 2)))
             choice = input("(Y/N) > ")
-            if choice == "Y":
+            if choice == "Y" or choice =="y":
                 list_of_payment_types = self.get_active_users_payment_types(self.active_customer)
                 print("\n\nChoose a payment option")
                 counter = 1
@@ -296,7 +296,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
                         # self.payment_process()
                 except ValueError:
                     print("\nPlease select a number!\n")
-            elif choice == "N":
+            elif choice == "N" or choice == "n":
                 print("\n")
             else:
                 print("\nPlease input a valid choice!\n")
