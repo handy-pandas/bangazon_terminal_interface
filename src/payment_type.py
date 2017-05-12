@@ -67,10 +67,10 @@ class PaymentType(object):
     Author:
       Nick Nash
     """
-    payment_types = [(1, 1, 1234567890123456, 'Visa')]
-    return payment_types
-
-
-
+    with sqlite3.connect("bangazon.db") as conn:
+      c = conn.cursor()
+      c.execute("SELECT PaymentType.name FROM PaymentType LEFT JOIN Customer ON PaymentType.customer_Id = Customer.customer_Id WHERE Customer.customer_Id is '{}'".format(active_customer_id))
+      payments = c.fetchall()
+    return payments
 
 

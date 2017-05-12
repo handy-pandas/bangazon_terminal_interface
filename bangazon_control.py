@@ -23,6 +23,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
 
     def __init__(self):
         self.active_customer = None
+        self.active_order_pk = None
 
 
     def create_customer(self, name, address, state, city, postal_code, phone_number):
@@ -221,6 +222,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         if selection == '5':
             if self.active_customer == None:
                 self.choose_active_customer()
+            self.complete_order()
 
         if selection == '6':
             self.display_popularity()
@@ -252,6 +254,60 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         new_payment_type = self.create_payment_type(self.active_customer, name, account_number)
         self.add_payment_type_to_database(new_payment_type)
 
+
+    def complete_order(self):
+        """
+        Displays the order total and allows the customer to confirm the purchase.
+        
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            Nick Nash
+        """
+        # self.get_specific_order(self.active_order_pk)
+        if self.active_order_pk == None:
+            print("\nPlease add some products to your order first. Press any key to return to main menu.\n")
+            input("> ")
+            pass
+        else: 
+            active_order = self.get_specific_order(self.active_order_pk)
+            print("\nYour order total is ${}. Ready to purchase?".format(round(active_order, 2)))
+            choice = input("(Y/N) > ")
+            if choice == "Y" or choice =="y":
+                list_of_payment_types = self.get_active_users_payment_types(self.active_customer)
+                print(list_of_payment_types)
+                if list_of_payment_types == []:
+                    print("\nPlease create a new payment type!\n")
+                    self.display_create_payment_type()
+                else:
+                    print("\n\nChoose a payment option")
+                    counter = 1
+                    for payment in list_of_payment_types:
+                        print("{}. {}".format(counter, payment[0]))
+                        counter += 1
+                    chosen_payment = input("> ")
+                    try:
+                        chosen_payment = int(chosen_payment)
+                        if chosen_payment in range(1, counter):
+                            print("\nYour order is complete! Press any key to return to main menu.")
+                            input()
+                            self.display_main_menu()
+                        else:
+                            print("\nPlease choose a valid option!\n")
+                            # self.payment_process()
+                    except ValueError:
+                        print("\nPlease select a number!\n")
+            elif choice == "N" or choice == "n":
+                print("\n")
+            else:
+                print("\nPlease input a valid choice!\n")
+                self.complete_order()
+
+    
     def display_popularity(self):
         """
         Displays popularity view of the popular products and their totals
