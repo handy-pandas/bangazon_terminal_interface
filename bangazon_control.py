@@ -279,23 +279,28 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             choice = input("(Y/N) > ")
             if choice == "Y" or choice =="y":
                 list_of_payment_types = self.get_active_users_payment_types(self.active_customer)
-                print("\n\nChoose a payment option")
-                counter = 1
-                for payment in list_of_payment_types:
-                    print("{}. {}".format(counter, payment[0]))
-                    counter += 1
-                chosen_payment = input("> ")
-                try:
-                    chosen_payment = int(chosen_payment)
-                    if chosen_payment in range(1, counter):
-                        print("\nYour order is complete! Press any key to return to main menu.")
-                        input()
-                        self.display_main_menu()
-                    else:
-                        print("\nPlease choose a valid option!\n")
-                        # self.payment_process()
-                except ValueError:
-                    print("\nPlease select a number!\n")
+                print(list_of_payment_types)
+                if list_of_payment_types == []:
+                    print("\nPlease create a new payment type!\n")
+                    self.display_create_payment_type()
+                else:
+                    print("\n\nChoose a payment option")
+                    counter = 1
+                    for payment in list_of_payment_types:
+                        print("{}. {}".format(counter, payment[0]))
+                        counter += 1
+                    chosen_payment = input("> ")
+                    try:
+                        chosen_payment = int(chosen_payment)
+                        if chosen_payment in range(1, counter):
+                            print("\nYour order is complete! Press any key to return to main menu.")
+                            input()
+                            self.display_main_menu()
+                        else:
+                            print("\nPlease choose a valid option!\n")
+                            # self.payment_process()
+                    except ValueError:
+                        print("\nPlease select a number!\n")
             elif choice == "N" or choice == "n":
                 print("\n")
             else:
