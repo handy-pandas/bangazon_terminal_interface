@@ -45,7 +45,7 @@ def CreateDatabase(database='bangazon.db'):
         try:
             c.execute("""create table Product (
                 product_Id integer not null primary key autoincrement,
-                price real,
+                price integer,
                 title text,
                 customer_Id integer)""")
 
