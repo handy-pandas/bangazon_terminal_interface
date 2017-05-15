@@ -42,3 +42,23 @@ class Product(object):
             products_list = c.fetchall()
             return products_list
 
+    def add_product(self, product_info, database='bangazon.db'):
+        """
+        This method allows users to add a product for a customer as the seller
+
+        Arguments:
+            product_info (Dictionary): dictionary contains the keys of 'price', 'title', 'seller_id' corresponding to the price of the product, title of the product and seller's customer primary key
+
+        Returns:
+            n/a
+
+        Author:
+            Adam Myers
+        """
+        with sqlite3.connect(database) as conn:
+            c = conn.cursor()
+
+            c.execute("insert into Product values ('{}', '{}', '{}', '{}')".format(None, product_info['price'], product_info['title'], product_info['seller_id']))
+
+            conn.commit()
+

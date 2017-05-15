@@ -25,6 +25,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         self.active_customer = None
         self.active_order_pk = None
         self.display_menu = 0
+        self.create_database = 0
 
 
     def create_customer(self, name, address, state, city, postal_code, phone_number):
@@ -63,7 +64,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         list_customer = self.retrieve_all_customers()
         counter = 1
 
-        print("Which customer will be active?")
+        print("\nWhich customer will be active?\n")
 
         for each_customer in list_customer:
             print("{}. {}".format(counter, each_customer['name']))
@@ -203,10 +204,14 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             wocaldwell
         """
         self.display_menu = 1
-        print('*********************************************************')
+        if self.create_database == 0:
+            CreateDatabase()
+            self.create_database = 1
+
+        print('\n*********************************************************')
         print('**  Welcome to Bangazon! Command Line Ordering System  **')
         print('*********************************************************')
-        print('1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to shopping cart\n5. Complete an order\n6. See product popularity\n7. Leave Bangazon!')
+        print('1. Create a customer account\n2. Choose active customer\n3. Create a payment option\n4. Add product to shopping cart\n5. Complete an order\n6. Add a product from customer\n7. See product popularity\n8. Display Products On Active Order\n9. Leave Bangazon!')
         selection = input('> ')
 
         if selection == '1':
@@ -231,12 +236,115 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             self.complete_order()
 
         if selection == '6':
-            self.display_popularity()
+            self.display_add_product()
 
         if selection == '7':
+            self.display_popularity()
+
+        if selection == '8':
+            if self.active_customer == None:
+                print("You don't have an active customer")
+                self.choose_active_customer()
+
+            self.display_products_on_order()
+
+        if selection == '9':
             sys.exit()
 
         self.display_menu = 0
+
+    def display_add_product(self):
+        """
+        Displays menu prompts for adding a product from a customer
+
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            Adam Myers
+        """
+        list_customer = self.retrieve_all_customers()
+        product_information = dict()
+
+        print("\nWhich customer will be adding this product?\n")
+
+        for cust_index, each_customer in enumerate(list_customer):
+            print("{}. {}".format(cust_index+1, each_customer['name']))
+
+        customer = input("> ")
+
+        try:
+            customer = int(customer)-1
+            product_information['seller_id'] = list_customer[customer]['id']
+        except ValueError:
+            print('Numbers only, please.')
+            self.display_add_product()
+            return
+
+        print("\nWhat is the title of this product?\n")
+        product_information['title'] = input("> ")
+
+        print("\nWhat is the price of this product?\n")
+        price = input("> ")
+
+        try:
+            product_information['price'] = float(price)
+############################################################################################################
+################## sqlite3 won't allow floating integers for insert.... solutions? ##################
+############################################################################################################
+        except ValueError:
+            print("Numbers only, please.")
+            self.display_add_product()
+            return
+
+        self.add_product(product_information)
+
+        print("\nProduct has been successfully added")
+        input('Press Return to continue')
+
+    def display_products_on_order(self):
+        """
+        Displays the products on the current order.
+
+        Arguments:
+            n/a
+
+        Returns:
+            n/a
+
+        Author:
+            Adam Myers
+        """
+        # Retrieves the current Order Id
+        current_order = self.retrieve_order_by_payment_type_none(self.active_customer)
+
+        # Handles the exception if there is no active order for that customer
+        if current_order == []:
+            print("\n***You don't have an Active Order from which to list products***\n***Please add a product to an order to create an Active Order***")
+            input("\nPress Return to continue\n")
+            return
+        else:
+            self.active_order_pk = current_order[0][0]
+
+        # Retrieves products on the active order
+        products_on_order = self.retrieve_customers_current_order()
+
+        # Handles the exception if theres no products on the current order
+        if products_on_order == []:
+            print("\n***You don't have any products on order***\n")
+            input("\nPress Return to continue\n")
+            return
+
+        # Displays products from the current order
+        print("\n***Products on current order***\n")
+        for each in products_on_order:
+            print("{}".format(each[0]))
+
+        input("\nPress Return to continue\n")
+
 
     def display_create_payment_type(self):
         """
@@ -368,3 +476,6 @@ if __name__ == '__main__':
     Bangazon = BangazonControl()
     while Bangazon.display_menu == 0:
         Bangazon.display_main_menu()
+
+
+

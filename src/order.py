@@ -68,14 +68,16 @@ class Order(object):
         wocaldwell
     """
     active_order = self.retrieve_order_by_payment_type_none(active_customer_id)
+
     if active_order == []:
       self.create_order_in_database(active_customer_id)
       active_order = self.retrieve_order_by_payment_type_none(active_customer_id)
       self.active_order_pk = active_order[0][0]
-      return self.active_order_pk
+
     else:
       self.active_order_pk = active_order[0][0]
-      return self.active_order_pk
+
+    return self.active_order_pk
 
   def get_specific_order(self, active_order_id):
     """Summary
@@ -96,11 +98,14 @@ class Order(object):
     return current_order[0][0]
 
   def update_order(self, payment_type_id):
-    """Summary
+    """
+    Updates current order's payement type id in the database
 
-    Args:
+    Arguments:
+      payment_type_id (Int): The current payment type's id the customer wants to use for purchasing order
 
     Returns:
+      n/a
 
     Author:
       Adam Myers
@@ -111,5 +116,33 @@ class Order(object):
       c.execute("update Orders set payment_type_Id = '{}' where order_Id = '{}'".format(payment_type_id, self.active_order_pk))
 
       conn.commit()
+
+  def retrieve_customers_current_order(self, database="bangazon.db"):
+    """
+    Retrieve customer's products for their current order
+
+    Args:
+      n/a
+
+    Returns:
+      products_on_current_order (List): list of the products on the current order
+
+    Author:
+      Adam Myers
+    """
+    with sqlite3.connect(database) as conn:
+      c = conn.cursor()
+
+      c.execute("select Product.title from Product left join ProductOrder on Product.product_Id = ProductOrder.product_Id where ProductOrder.order_Id = '{}'".format(self.active_order_pk))
+
+      products_on_current_order = c.fetchall()
+
+      return products_on_current_order
+
+if __name__ == "__main__":
+  test = Order()
+  test.active_order_pk = 1
+  print_me = test.retrieve_customers_current_order(database="../bangazon.db")
+  print(print_me)
 
 

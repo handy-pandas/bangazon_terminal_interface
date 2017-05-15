@@ -127,13 +127,14 @@ def proper_spacing_revenue(number):
     try:
         integer = number[:number.index('.')]
         change = number[number.index('.'):]
-
+        
         if len(change) > 3:
             change = change[:3]
 
         if len(integer) > 3:
             integer = add_comma(integer)
-            number = integer + change
+
+        number = integer + change
 
     except ValueError:
         pass

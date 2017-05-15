@@ -45,20 +45,21 @@ def CreateDatabase(database='bangazon.db'):
         try:
             c.execute("""create table Product (
                 product_Id integer not null primary key autoincrement,
-                price integer,
-                title text)""")
+                price real,
+                title text,
+                customer_Id integer)""")
 
         except sqlite3.OperationalError:
             product_table_needs_inserts = False
 
         if product_table_needs_inserts:
-            c.execute("insert into Product values (null, 2.99, 'Apples')")
-            c.execute("insert into Product values (null, 4.34, 'Average Desktop Pen')")
-            c.execute("insert into Product values (null, 9.12, 'Potato Hats')")
-            c.execute("insert into Product values (null, 8.54, 'Alien Insects')")
-            c.execute("insert into Product values (null, 134.82, 'Talbot Windows 10')")
-            c.execute("insert into Product values (null, 502.14, '1HP Shoe Shiner')")
-            c.execute("insert into Product values (null, 0.12, 'Cheap Joke')")
+            c.execute("insert into Product values (null, 2.99, 'Apples', null)")
+            c.execute("insert into Product values (null, 4.34, 'Average Desktop Pen', null)")
+            c.execute("insert into Product values (null, 9.12, 'Potato Hats', null)")
+            c.execute("insert into Product values (null, 8.54, 'Alien Insects', null)")
+            c.execute("insert into Product values (null, 134.82, 'Talbot Windows 10', null)")
+            c.execute("insert into Product values (null, 502.14, '1HP Shoe Shiner', null)")
+            c.execute("insert into Product values (null, 0.12, 'Cheap Joke', null)")
         else:
             pass
 
