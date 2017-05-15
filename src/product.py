@@ -58,7 +58,7 @@ class Product(object):
         with sqlite3.connect(database) as conn:
             c = conn.cursor()
 
-            c.execute("insert into Product values ('{}', '{}', '{}', '{}')".format(None, product_info['price'], product_info['title'], product_info['seller_id']))
+            c.execute("insert into Product values (?, ?, ?, ?)", (None, product_info['price'], product_info['title'], product_info['seller_id']))
 
             conn.commit()
 
