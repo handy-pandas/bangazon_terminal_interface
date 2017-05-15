@@ -291,7 +291,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         price = input("> ")
 
         try:
-            product_information['price'] = float(price)
+            product_information['price'] = round(float(price), 2)
         except ValueError:
             print("Numbers only, please.")
             self.display_add_product()
