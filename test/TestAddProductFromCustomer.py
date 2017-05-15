@@ -10,13 +10,17 @@ class TestViewContentsOfOrder(unittest.TestCase):
     def setUpClass(self):
         self.control = BangazonControl()
 
-    def test_can_view_contents_of_current_order(self):
+    def test_can_add_product_from_customer(self):
 
         with patch('sqlite3.connect'):
             with patch('sqlite3.connect.cursor'):
-                with patch('sqlite3.connect.cursor.fetchall', return_value=[(1, )]):
-                    current_products = self.control.retrieve_all_products()
-                    product_seller_id = current_products[0][3]
+                with patch('sqlite3.connect.cursor.fetchall', return_value=[(1, 'Apples', 0.99, 1)]):
+                    product = { 'title': 'Balloons', 'price': 0.99, 'seller_id': 1}
+                    self.control.add_product(product)
+
+                    products = self.control.retrieve_all_products()
+
+                    product_seller_id = products[0][3]
 
                     self.assertIsNotNone(product_seller_id)
 

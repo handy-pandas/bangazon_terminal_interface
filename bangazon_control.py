@@ -292,9 +292,6 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
 
         try:
             product_information['price'] = float(price)
-############################################################################################################
-################## sqlite3 won't allow floating integers for insert.... solutions? ##################
-############################################################################################################
         except ValueError:
             print("Numbers only, please.")
             self.display_add_product()
