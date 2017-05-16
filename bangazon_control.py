@@ -162,20 +162,32 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         print("Enter customer name")
         name = input("> ")
 
+        name = self.remove_odd_characters(name)
+
         print("Enter street address")
         street_address = input("> ")
+
+        street_address = self.remove_odd_characters(street_address)
 
         print("Enter city")
         city = input("> ")
 
+        city = self.remove_odd_characters(city)
+
         print("Enter state")
         state = input("> ")
+
+        state = self.remove_odd_characters(state)
 
         print("Enter postal code")
         postal_code = input("> ")
 
+        postal_code = self.remove_odd_characters(postal_code)
+
         print("Enter phone number")
         phone_number = input("> ")
+
+        phone_number = self.remove_odd_characters(phone_number)
 
         new_customer = self.create_customer(name, street_address, state, city, postal_code, phone_number)
         self.add_customer_to_database(new_customer)
@@ -279,8 +291,12 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         print("\nWhat is the title of this product?\n")
         product_information['title'] = input("> ")
 
+        product_information['title'] = self.remove_odd_characters(product_information['title'])
+
         print("\nWhat is the price of this product?\n")
         price = input("> ")
+
+        price = self.remove_odd_characters(price, 'number')
 
         try:
             product_information['price'] = round(float(price), 2)
@@ -352,7 +368,8 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         os.system('cls' if os.name == 'nt' else 'clear')
         print("\n\nEnter payment type (e.g. AMEX, VISA, Mastercard)")
         name = input("> ")
-        name = name.replace("'", '')
+
+        name = self.remove_odd_characters(name)
 
         print("\nEnter account number")
         account_number = input("> ")
@@ -480,6 +497,31 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         print("Totals:           {}{}${}".format(totals['orders'], totals['customers'], totals['revenues']))
 
         input("\nPress Return to Continue...\n")
+
+    def remove_odd_characters(self, string, check_for_decimals=True):
+        """
+        Removed unwanted characters from a string to prep for sql insert.
+
+        Arguments:
+            string (String): String needing to be have removed odd characters
+            check_for_decimals (Boolean): if anything other than True will remove '.' from string, if not will leave '.' in string
+
+        Returns:
+            string (String): After having removed odd characters.
+
+        Author:
+            Adam Myers
+        """
+        if check_for_decimals == True:
+            for each in ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '_', '[', ']', '{', '}', '\\', "'", '"', '.', '<', '>', '/', '?', ':', ';']:
+                if each in string:
+                    string = string.replace(each, '')
+        else:
+            for each in ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '_', '[', ']', '{', '}', '\\', "'", '"', '<', '>', '/', '?', ':', ';']:
+                if each in string:
+                    string = string.replace(each, '')
+
+        return string
 
 
 if __name__ == '__main__':
