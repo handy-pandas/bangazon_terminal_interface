@@ -21,14 +21,14 @@ def query_popularity_view(database='bangazon.db'):
         c = conn.cursor()
 
         c.execute("""
-            select pro.title, count(ord.order_Id), count(distinct cu.customer_Id), sum(pro.price) 
+            select pro.title, count(ord.order_Id) as orders, count(distinct cu.customer_Id), sum(pro.price) 
             from Product pro 
             join ProductOrder po on pro.product_Id = po.product_Id 
             join Orders ord on po.order_Id = ord.order_Id 
             join Customer cu on ord.customer_Id = cu.customer_Id 
             where ord.payment_type_Id is not Null
             group by pro.title  
-            order by ord.order_Id, cu.customer_Id, pro.price DESC
+            order by orders DESC
             limit 4
             """)
 

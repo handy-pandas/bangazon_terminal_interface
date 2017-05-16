@@ -352,6 +352,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         os.system('cls' if os.name == 'nt' else 'clear')
         print("\n\nEnter payment type (e.g. AMEX, VISA, Mastercard)")
         name = input("> ")
+        name = name.replace("'", '')
 
         print("\nEnter account number")
         account_number = input("> ")
@@ -485,6 +486,7 @@ if __name__ == '__main__':
     Bangazon = BangazonControl()
     while Bangazon.display_menu == 0:
         Bangazon.display_main_menu()
+
 
 
 
