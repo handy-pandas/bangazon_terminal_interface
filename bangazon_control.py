@@ -1,3 +1,4 @@
+import os
 import sys
 from src.customer import Customer
 from src.order import Order
@@ -45,6 +46,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             Adam Myers
         """
+        os.system('cls' if os.name == 'nt' else 'clear')
         new_customer = { 'name': name, 'address' : address, 'state': state, 'city': city, 'postal_code': postal_code, 'phone_number': phone_number }
         return new_customer
 
@@ -61,6 +63,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             Talbot Lawrence
         """
+        os.system('cls' if os.name == 'nt' else 'clear')
         list_customer = self.retrieve_all_customers()
         counter = 1
 
@@ -83,6 +86,8 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             print('Numbers only, dorkus.')
             self.choose_active_customer()
 
+        self.active_order_pk = None
+
 
     def create_payment_type(self, customer_id, name, account_number):
         """
@@ -101,23 +106,6 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         new_payment_type = {'customer_id': customer_id, 'name': name, 'account_number': account_number}
         return new_payment_type
 
-    def save_all_customers(self):
-        pass
-
-    def save_all_products(self):
-        self.products = [(1, 12.99, 'ball')]
-
-    def add_product_to_order(self, index_of_product):
-        if self.active_customer:
-            self.active_order = self.make_order_active(self.active_customer)
-
-    def get_sum_of_products_for_current_order(self, active_order_id):
-        pass
-
-    def update_payment_type_for_order(self, active_order_id, payment_type_id):
-        pass
-
-
     def display_products_and_add_to_cart(self):
         """
         Display all the products from the product table in the cli. When the customer selects a product from the list the product and active order id's are added to the database.
@@ -130,6 +118,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             wocaldwell
         """
+        os.system('cls' if os.name == 'nt' else 'clear')
         product_list = self.retrieve_all_products()
         counter = 1
         for product in product_list:
@@ -169,6 +158,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             Adam Myers
         """
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("Enter customer name")
         name = input("> ")
 
@@ -203,6 +193,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             wocaldwell
         """
+        os.system('cls' if os.name == 'nt' else 'clear')
         self.display_menu = 1
         if self.create_database == 0:
             CreateDatabase()
@@ -266,6 +257,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             Adam Myers
         """
+        os.system('cls' if os.name == 'nt' else 'clear')
         list_customer = self.retrieve_all_customers()
         product_information = dict()
 
@@ -315,6 +307,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             Adam Myers
         """
+        os.system('cls' if os.name == 'nt' else 'clear')
         # Retrieves the current Order Id
         current_order = self.retrieve_order_by_payment_type_none(self.active_customer)
 
@@ -356,6 +349,7 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
         Author:
             Nick Nash
         """
+        os.system('cls' if os.name == 'nt' else 'clear')
         print("\n\nEnter payment type (e.g. AMEX, VISA, Mastercard)")
         name = input("> ")
 
@@ -381,11 +375,23 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             Adam Myers
         """
         # self.get_specific_order(self.active_order_pk)
+        os.system('cls' if os.name == 'nt' else 'clear')
         if self.active_order_pk == None:
-            input("\nPlease add some products to your order first. Press Return key to return to main menu.\n")
-            return
+            current_order = self.retrieve_order_by_payment_type_none(self.active_customer)
+
+            if current_order == []:
+                input("\nPlease add some products to an order first. Press Return key to return to main menu.\n")
+                return
+            else:
+                self.active_order_pk = current_order[0][0]
 
         active_order = self.get_specific_order(self.active_order_pk)
+        products_on_order = self.retrieve_customers_current_order()
+
+        print("\n*** Products on current order ***\n")
+        for each in products_on_order:
+            print("{}".format(each[0]))
+
         print("\nYour order total is ${}. Ready to purchase?".format(round(active_order, 2)))
         choice = input("(Y/N) > ")
 
@@ -393,12 +399,12 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             list_of_payment_types = self.get_active_users_payment_types(self.active_customer)
 
             if list_of_payment_types == []:
-                print("\nPlease create a new payment type!\n")
+                input("\nYou don't have a payment type stored, Press Return to create one.\n")
                 self.display_create_payment_type()
 
             list_of_payment_types = self.get_active_users_payment_types(self.active_customer)
 
-            print("\n\nChoose a payment option")
+            print("\nChoose a payment option")
             counter = 1
 
             for payment in list_of_payment_types:
@@ -412,6 +418,8 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
 
                 if chosen_payment in range(1, counter):
                     self.update_order(list_of_payment_types[chosen_payment-1][0])
+
+                    self.active_order_pk = None
 
                     input("\nYour order is complete! Press any key to return to main menu.\n")
 
@@ -446,25 +454,29 @@ class BangazonControl(Customer, Order, PaymentType, Product, ProductOrder):
             Adam Myers
             Talbot Lawrence
         """
+        os.system('cls' if os.name == 'nt' else 'clear')
         queries = query_popularity_view()
+        totals = { 'orders': 0, 'customers': 0, 'revenues': 0 }
 
         print("\nProduct           Orders     Customers  Revenue")
         print("*******************************************************")
         for each in queries['Popularity']:
             each = list(each)
             each[0] = proper_spacing_product(each[0])
+            totals['orders'] += each[1]
             each[1] = proper_spacing_order_and_customer(each[1])
+            totals['customers'] += each[2]
             each[2] = proper_spacing_order_and_customer(each[2])
+            totals['revenues'] += each[3]
             each[3] = proper_spacing_revenue(each[3])
             print("{} {}{}${}".format(each[0], each[1], each[2], each[3]))
 
         print("*******************************************************")
-        queries['Totals'][0] = list(queries['Totals'][0])
-        queries['Totals'][0][0] = proper_spacing_order_and_customer(queries['Totals'][0][0])
-        queries['Totals'][0][1] = proper_spacing_order_and_customer(queries['Totals'][0][1])
-        queries['Totals'][0][2] = proper_spacing_revenue(queries['Totals'][0][2])
+        totals['orders'] = proper_spacing_order_and_customer(totals['orders'])
+        totals['customers'] = proper_spacing_order_and_customer(totals['customers'])
+        totals['revenues'] = proper_spacing_revenue(totals['revenues'])
 
-        print("Totals:           {}{}${}".format(queries['Totals'][0][0], queries['Totals'][0][1], queries['Totals'][0][2]))
+        print("Totals:           {}{}${}".format(totals['orders'], totals['customers'], totals['revenues']))
 
         input("\nPress Return to Continue...\n")
 

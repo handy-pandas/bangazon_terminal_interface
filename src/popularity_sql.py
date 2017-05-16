@@ -34,18 +34,7 @@ def query_popularity_view(database='bangazon.db'):
 
         query_1 = c.fetchall()
 
-        c.execute("""
-            select count(ord.order_Id), count(cu.customer_Id), sum(pro.price) 
-            from Product pro 
-            join ProductOrder po on pro.product_Id = po.product_Id 
-            join Orders ord on po.order_Id = ord.order_Id 
-            join Customer cu on ord.customer_Id = cu.customer_Id 
-            where ord.payment_type_Id is not Null
-            """)
-
-        query_2 = c.fetchall()
-
-        queries = { 'Popularity': query_1, 'Totals': query_2 }
+        queries = { 'Popularity': query_1 }
 
         return queries
 

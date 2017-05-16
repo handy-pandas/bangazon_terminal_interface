@@ -14,7 +14,8 @@ class TestViewContentsOfOrder(unittest.TestCase):
         self.control.active_order_pk = 1
         with patch('sqlite3.connect'):
             with patch('sqlite3.connect.cursor'):
-                with patch('sqlite3.connect.cursor.fetchall', return_value=[(1, 'Apples'),(2, 'Cheap Joke')]):
+                with patch('sqlite3.connect.cursor.fetchall', return_value=[(1, 'Apples', 2.99, None),(2, 'Cheap Joke', 0.37, None)]):
+
                     current_products_on_order = self.control.retrieve_customers_current_order()
 
                     self.assertIsNotNone(current_products_on_order)

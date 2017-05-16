@@ -14,13 +14,15 @@ class TestViewContentsOfOrder(unittest.TestCase):
 
         with patch('sqlite3.connect'):
             with patch('sqlite3.connect.cursor'):
-                with patch('sqlite3.connect.cursor.fetchall', return_value=[(1, 'Apples', 0.99, 1)]):
+                with patch('sqlite3.connect.cursor.execute'):
+
                     product = { 'title': 'Balloons', 'price': 0.99, 'seller_id': 1}
                     self.control.add_product(product)
 
-                    products = self.control.retrieve_all_products()
 
+                with patch('sqlite3.connect.cursor.fetchall', return_value=[(1, 'Apples', 0.99, 1)]):
+
+                    products = self.control.retrieve_all_products()
                     product_seller_id = products[0][3]
 
                     self.assertIsNotNone(product_seller_id)
-
