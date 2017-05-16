@@ -21,7 +21,7 @@ def query_popularity_view(database='bangazon.db'):
         c = conn.cursor()
 
         c.execute("""
-            select pro.title, count(ord.order_Id), count(cu.customer_Id), sum(pro.price) 
+            select pro.title, count(ord.order_Id), count(distinct cu.customer_Id), sum(pro.price) 
             from Product pro 
             join ProductOrder po on pro.product_Id = po.product_Id 
             join Orders ord on po.order_Id = ord.order_Id 
